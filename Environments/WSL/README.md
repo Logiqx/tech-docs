@@ -20,11 +20,15 @@ sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get dist-upgrade -y; apt-
 
 
 
-## WLinux
+## Pengwin
 
 In March 2019, I switched to the WLinux distribution from the Microsoft Store.
 
 The most appealing feature of WLinux is the inbuilt Docker bridge, integrating with Docker for Windows.
+
+On my machine WLinux renamed itself to Pengwin on 11 April 2019.
+
+Microsoft Store - [WLinux / Pengwin](https://www.microsoft.com/en-gb/p/wlinux/9nv1gv1pxz6p)
 
 
 

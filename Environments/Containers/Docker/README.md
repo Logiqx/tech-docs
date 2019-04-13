@@ -3,6 +3,7 @@
 ## Background
 
 Docker - https://www.docker.com/
+
 Docker Hub - https://hub.docker.com/
 
 
@@ -19,7 +20,7 @@ I've made some notes on how to create suitable [boot configurations](../../Boot.
 
 I started off by working through "Get started with Docker for Windows" and "Get Started with Docker".
 
-I've listed the commands below but the full output has also been thoroughly [documented](GetStarted.md).
+A summary of the commands used is below but the full output has also been thoroughly [documented](Get%20Started.md).
 
 
 
@@ -102,13 +103,13 @@ docker swarm leave --force
 
 The command line help for Docker is very good but a cheat sheet is still useful to a beginner.
 
-I've listed a number of my most frequently used and most useful [commands](Commands.md).
+I've listed a number of my most frequently used [commands](Commands.md).
 
 
 
 ## My Containers
 
-This section lists some of the containers that I have been using in Docker.
+This section lists some of the containers that I have created using in Docker.
 
 ### Jupyter
 
@@ -120,9 +121,17 @@ I have documented the way I have set up [Jupyter](../../../Development/Languages
 
 ### MySQL
 
-I use MySQL for ad hoc analysis and as part of an AMP / EMP stack.
+I have used MySQL for WCA data analysis and as part of an AMP / EMP stack.
 
 I have documented the way I have set up [MySQL](../../../Services/Databases/MySQL/README.md) using Docker Compose.
+
+
+
+### MariaDB
+
+I have used MariaDB for WCA data analysis and as part of an AMP / EMP stack.
+
+I have documented the way I have set up [MariaDB](../../../Services/Databases/MariaDB/README.md) using Docker Compose.
 
 
 
@@ -138,26 +147,68 @@ TODO
 
 
 
+### WordPress
+
+TODO - [Dockerizing Wordpress with Nginx and PHP-FPM](https://www.google.com/amp/s/www.howtoforge.com/tutorial/dockerizing-wordpress-with-nginx-and-php-fpm/amp/)
+
+
+
+## Linux Containers on Windows
+
+Linux Containers on Windows (LCOW) is an experimental feature in Docker for Windows.
+
+Until some of the issues with it have been fixed, I will continue to run traditional Linux containers.
+
+I've made some notes on my experiences with [LCOW](LCOW.md).
+
+
+
+## Tips and Tricks
+
+I've have collated random [hints and tips](Hints%20and%20Tips.md).
+
+
+
+## Health Checks
+
+I have yet to implement health checks but they are an essential component in production swarms.
+
+
+
 ## Advice and Guidance
 
 ### Best Practice
 
 Docker Docs - [Docker development best practices](https://docs.docker.com/develop/dev-best-practices/)
+
 Docker Docs - [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+
 Docker Docs - [Isolate containers with a user namespace](https://docs.docker.com/engine/security/userns-remap/)
 
 Red Hat Developer - [10 things to avoid in docker containers](https://developers.redhat.com/blog/2016/02/24/10-things-to-avoid-in-docker-containers/)
+
 Red Hat Developer - [Keep it small: a closer look at Docker image sizing](https://developers.redhat.com/blog/2016/03/09/more-about-docker-images-size/)
+
 Project Atomic - [Guidance for Docker Image Authors](http://www.projectatomic.io/docs/docker-image-author-guidance/)
 
 Ivan Krizsan - [Time in Docker Containers](https://www.ivankrizsan.se/2015/10/31/time-in-docker-containers/)
 
 
 
+### Base Images
+
+Alpine - [The 3 Biggest Wins When Using Alpine as a Base Docker Image](https://nickjanetakis.com/blog/the-3-biggest-wins-when-using-alpine-as-a-base-docker-image)
+
+Note: Image size is not the primary consideration when choosing a base OS but it is still quite cool.
+
+
+
 ### Storage
 
 [Manage data in Docker](https://docs.docker.com/storage/) - Choose the right type of mount for containers to store files in the host machine
+
 [Use Volumes](https://docs.docker.com/storage/volumes/#differences-between--v-and---mount-behavior) - Volumes are the preferred mechanism for persisting data used by Docker containers
+
 [Cloudstor (AWS)](https://docs.docker.com/docker-for-aws/persistent-data-volumes/) - Cloudstor is a modern volume plugin for Docker swarms deployed on AWS
 
 
@@ -165,6 +216,7 @@ Ivan Krizsan - [Time in Docker Containers](https://www.ivankrizsan.se/2015/10/31
 ### Sensitive Data / Secrets
 
 [Manage sensitive data with Docker secrets](https://docs.docker.com/engine/swarm/secrets/)
+
 [AWS Launches Secrets Support for Amazon Elastic Container Service](https://aws.amazon.com/about-aws/whats-new/2018/11/aws-launches-secrets-support-for-amazon-elastic-container-servic/)
 
 
@@ -172,16 +224,16 @@ Ivan Krizsan - [Time in Docker Containers](https://www.ivankrizsan.se/2015/10/31
 ### Docker Toolbox (Legacy)
 
 Docker Toolbox - [Docker Toolbox overview](https://docs.docker.com/toolbox/overview/)
+
 Docker Machine - [Get started with Docker Machine and a local VM](https://docs.docker.com/machine/get-started/)
 
 
 
 ## Articles
 
-### General
+### Moby
 
 Docker Blog - [Introducing Moby Project](https://blog.docker.com/2017/04/introducing-the-moby-project/)
-Nick Janetakis - [The 3 Biggest Wins When Using Alpine as a Base Docker Image](https://nickjanetakis.com/blog/the-3-biggest-wins-when-using-alpine-as-a-base-docker-image)
 
 ### Microsoft
 
