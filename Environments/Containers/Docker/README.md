@@ -99,6 +99,32 @@ docker swarm leave --force
 
 
 
+## Persistent Storage
+
+### Volumes
+
+Useful for things like MySQL and MariaDB databases.
+
+### Bind Mounts
+
+Useful for files that need to be accessible on host machine during development.
+
+#### Setup
+
+Docker For Windows
+
+​	Settings -> Shared Drives -> C
+
+Share C: Drive
+
+​	Right-click C: -> Properties -> Sharing -> Share...
+
+Anti-Virus Exclusion
+
+​	Norton -> Settings -> Firewall -> Configure Public Network Exceptions -> File and Printer Sharing
+
+
+
 ## Useful Commands
 
 The command line help for Docker is very good but a cheat sheet is still useful to a beginner.
