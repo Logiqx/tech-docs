@@ -56,7 +56,7 @@ I've started to make a few notes on [web servers](Services/Web%20Servers/README.
 
 ### Databases
 
-I've started to make a few notes on [MySQL](Services/Databases/MySQL/README.md) servers.
+I've started to make a few notes on [databases](Services/Databases/README.md) such as MySQL and MariaDB.
 
 
 
