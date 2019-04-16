@@ -191,7 +191,7 @@ I've made some notes on my experiences with [LCOW](LCOW.md).
 
 ## Tips and Tricks
 
-I've have collated random [hints and tips](Hints%20and%20Tips.md).
+I've have collated random [Tips and Tricks](Tips%20and%20Tricks.md).
 
 
 
