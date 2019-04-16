@@ -12,7 +12,7 @@ I started using MySQL 4.1 as part of the LAMP stack for CAESAR sometime around 2
 
 ### Release History
 
-Release information has been taken from [Wikipedia](https://en.wikipedia.org/wiki/MySQL#Release_history) and the MySQL release notes.
+Release dates have been taken from [Wikipedia](https://en.wikipedia.org/wiki/MySQL#Release_history) and the MySQL release notes.
 
 Legacy Releases:
 
@@ -22,7 +22,7 @@ Legacy Releases:
 | 5.0     | October 19, 2005     | 5.0.96               | 2012-03-21     | December 2011  |
 | 5.1     | November 14, 2008    | 5.1.73               | 2013-12-03     | December 2013  |
 
-Official MySQL images available on [Docker Hub](https://hub.docker.com/_/mysql):
+Releases where official images are available on [Docker Hub](https://hub.docker.com/_/mysql):
 
 | Release | General availability | Latest minor version | Latest release | End of support |
 | ------- | -------------------- | -------------------- | -------------- | -------------- |
@@ -41,7 +41,7 @@ Official MySQL images available on [Docker Hub](https://hub.docker.com/_/mysql):
 | VirtualBox - WIN7AMP (TLOW development) | [5.5.19](https://dev.mysql.com/doc/relnotes/mysql/5.5/en/) (2011-12-08) | ? |
 | XE Solutions - caesar.logiqx.com | [5.5.61](https://dev.mysql.com/doc/relnotes/mysql/5.5/en/) (2018-07-27) | [4.1.13](http://ftp.nchu.edu.tw/MySQL/doc/refman/4.1/en/news-4-1-x.html) (2005-07-15) |
 | eUKHost - mikeg.me.uk | [5.6.43](https://dev.mysql.com/doc/relnotes/mysql/5.6/en/) (2019-01-21) |  |
-| Docker - Laptop (local development) | [8.0.15](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/>) (2019-02-01) | [8.0.15](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/>) (2019-02-01) |
+| Docker - Laptop (local development) | [8.0.15](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/) (2019-02-01) | [8.0.15](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/) (2019-02-01) |
 
 
 
@@ -51,9 +51,9 @@ Official MySQL images available on [Docker Hub](https://hub.docker.com/_/mysql):
 
 [MySQL](https://hub.docker.com/_/mysql) - Official Docker image
 
-[MySQL Server](https://hub.docker.com/r/mysql/mysql-server/) - Optimised Docker image created, maintained and supported by the MySQL team at Oracle 
+[MySQL Server](https://hub.docker.com/r/mysql/mysql-server/) - Optimised Docker image from the MySQL team at Oracle 
 
-[MySQL Documentation](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/linux-installation-docker.html) - Deploying MySQL on Linux with Docker
+[Deploying MySQL on Linux with Docker](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/linux-installation-docker.html) - MySQL Documentation
 
 
 
@@ -61,7 +61,7 @@ Official MySQL images available on [Docker Hub](https://hub.docker.com/_/mysql):
 
 #### Running from the Command Line
 
-Starting a MySQL to be accessible from the host machine - e.g. MySQL Workbench:
+Starting MySQL and making it accessible from the host machine - e.g. MySQL Workbench:
 
 ```sh
 docker run --name mysql -p 3306:3306 -d mysql:tag
@@ -109,7 +109,7 @@ volumes:
 
 **Command line**
 
-```
+```sh
 docker-compose up -d
 docker-compose logs
 docker-compose stop
@@ -125,7 +125,7 @@ MySQL parameters can be supplied on the command line, Docker Compose file or in 
 
 A configuration file may be bind mounted into the container or built into a bespoke Docker image.
 
-Example configuration file - mount as /etc/mysql/conf.d/my.cnf
+Example configuration file - /etc/mysql/conf.d/my.cnf:
 
 ```sh
 [mysqld]
@@ -133,7 +133,7 @@ innodb_buffer_pool_size        = 2G
 innodb_log_file_size           = 512M
 ```
 
-Portion of docker-compose.yml to achieve the same result.
+Portion of docker-compose.yml to illustrate the same parameters:
 
 ```yaml
 version: '3'
@@ -173,38 +173,38 @@ MySQL allocates buffers and caches to improve performance of database operations
 
 One of the most important parameters for MySQL query performance is the InnoDB buffer pool size.
 
-I currently use a 2GB buffer pool so that MySQL can hold two copies of the [WCA](https://www.worldcubeassociation.org/results/misc/export.html) database in memory:
+I use a 2GB buffer pool so that MySQL can hold two different versions of the [WCA](https://www.worldcubeassociation.org/results/misc/export.html) database in memory:
 
 ```sh
 innodb_buffer_pool_size=2G
 ```
 
-Checking the buffer pool size (GiB) via SQL:
+Checking the buffer pool size via SQL:
 
 ```sql
 SHOW VARIABLES LIKE "innodb_buffer_pool_size";
 
-SELECT @@innodb_buffer_pool_size / 1024 / 1024 / 1024;  -- Show size in GB
+SELECT @@innodb_buffer_pool_size / 1024 / 1024 / 1024;  -- Show size in GiB
 SELECT @@innodb_buffer_pool_size / 1024 / 1024 / 128;   -- Show size relative to default
 ```
 
-Checking how much of the bugger pool is being used:
+Checking how much of the buffer pool is being used:
 
 ```sql
 SHOW ENGINE INNODB STATUS;
 
-SELECT CONCAT(FORMAT(DataPages * 100.0 / TotalPages, 2), ' %') AS BufferPoolDataPercentage
+SELECT CONCAT(FORMAT(pages_data * 100.0 / pages_total, 2), ' %') AS buffer_pool_pct_used
 FROM
 (
-	SELECT variable_value DataPages
+	SELECT variable_value AS pages_data
 	FROM information_schema.global_status
 	WHERE variable_name = 'Innodb_buffer_pool_pages_data'
-) AS A,
+) AS t1,
 (
-	SELECT variable_value TotalPages
+	SELECT variable_value AS pages_total
 	FROM information_schema.global_status
 	WHERE variable_name = 'Innodb_buffer_pool_pages_total'
-) AS B;
+) AS t2;
 ```
 
 References:
@@ -227,9 +227,9 @@ References:
 
 #### InnoDB Log File Size
 
-The InnoDB log file size can affect table load performance.
+The InnoDB log file size can affect the performance when loading large tables.
 
-There are multiple log files (default = 2) so the total size is determined by multiplying the two numbers together:
+There are multiple log files (default = 2) so the total size is determined by multiplying the file size and the number of files:
 
 ```sh
 innodb_log_file_size=512M
@@ -254,7 +254,7 @@ References:
 
 To use "SELECT ... INTO OUTFILE ..." it is necessary to update the secure_file_priv variable.
 
-This parameter can specify a secure path or allow reading / writing from any path by omitting the value:
+This parameter can specify a specific path or allow reading / writing in any path by omitting the value:
 
 ```sh
 secure_file_priv=
@@ -270,7 +270,7 @@ Reference:
 
 This parameter controls the balance between strict ACID compliance for commit operations and higher performance that is possible when commit-related I/O operations are rearranged and done in batches.
 
-You can achieve better performance by changing the default value but then you can lose transactions in a crash. This reduced my typical load times from around 5 minutes to under 1 minute 30 seconds.
+You can achieve better performance by changing the default value but then you can lose transactions in a crash. This reduced my typical load times in MariaDB from ~5 minutes to under 1 minute 30 seconds.
 
 ```sh
 innodb_flush_log_at_trx_commit=2
@@ -286,7 +286,7 @@ Reference:
 
 The method used to flush data to InnoDB data files and log files can significantly affect I/O throughput.
 
-When running MySQL using Docker for Windows this setting halves my database load times.
+When running MariaDB in Docker for Windows this setting halved my database load times.
 
 ```sh
 innodb_flush_method=O_DIRECT_NO_FSYNC
@@ -304,7 +304,9 @@ References:
 
 A number of blogs refer to performance improvements when disabling the doublewrite buffer as below.
 
-I haven't observed any improvement with this change on my system so I do not use it on my laptop.
+I haven't observed any improvement with this change on my system so I do not disable it on my laptop.
+
+Note: This parameter may not be having any effect due to the "flush" related parameters described earlier.
 
 ```sh
 innodb_doublewrite=OFF
@@ -322,7 +324,7 @@ References:
 
 After experimentation, I've ended up leaving the asynchronous I/O subsystem (native AIO) enabled.
 
-Switching it off did not appear to have any noticeable impact when running MySQL in Docker.
+Switching it off did not appear to have any discernible impact when running MariaDB in Docker.
 
 ```sh
 innodb_use_native_aio=ON
@@ -340,7 +342,7 @@ References:
 
 #### InnodDB Log Buffer Size
 
-After experimenting a larger buffer, I've ended up leaving it at the default.
+After experimenting with various log buffer sizes (smaller and larger), I've ended up using the default.
 
 ```sh
 innodb_log_buffer_size=8M
@@ -352,7 +354,7 @@ It is possible to determine if the log buffer is too small using the following S
 SHOW GLOBAL STATUS LIKE 'innodb_log_waits';
 ```
 
-A result which is greater than 0 signifies that the log is potentially too small.
+If the number of log waits is greater than 0 it implies that the log buffer is potentially too small.
 
 References:
 
@@ -380,13 +382,13 @@ Reference:
 
 
 
-### Blogs
+### Blogs on Tuning
 
 Here are a number of articles that discuss the main parameters that I tweak in MySQL:
 
 [InnoDB Startup Configuration](https://dev.mysql.com/doc/refman/8.0/en/innodb-init-startup-configuration.html) - buffer pool size and redo log file size
 
-[Dedicated MySQL Server](https://dev.mysql.com/doc/refman/8.0/en/innodb-dedicated-server.html) - buffer pool size, redo log file size and flush method
+[Dedicated MySQL Server](https://dev.mysql.com/doc/refman/8.0/en/innodb-dedicated-server.html) - buffer pool size, redo log file size and flush method (O_DIRECT_NO_FSYNC)
 
 [Performance Tuning After Installation](https://www.percona.com/blog/2016/10/12/mysql-5-7-performance-tuning-immediately-after-installation/) - buffer pool size, redo log file size, flush at commit and flush method
 
@@ -398,8 +400,10 @@ Here are a number of articles that discuss the main parameters that I tweak in M
 
 ## MySQL vs MariaDB
 
-I have found that MariaDB outperforms MySQL when running in Docker on my Laptop.
+I have found that MariaDB outperforms MySQL for my workloads when running in Docker on my Laptop.
 
 Loading the WCA database takes about 5 minutes on MySQL but around 1.5 minutes on MariaDB.
 
-[MySQL Performance: MySQL vs. MariaDB](https://www.liquidweb.com/kb/mysql-performance-mysql-vs-mariadb/)
+[MySQL Performance: MySQL vs. MariaDB](https://www.liquidweb.com/kb/mysql-performance-mysql-vs-mariadb/) - great comparison of MySQL and MariaDB
+
+[MariaDB versus MySQL - Features](https://mariadb.com/kb/en/library/mariadb-vs-mysql-features/) - feature comparison
