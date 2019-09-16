@@ -109,19 +109,23 @@ Useful for things like MySQL and MariaDB databases.
 
 Useful for files that need to be accessible on host machine during development.
 
+Can initially be a little tricky to get working on Windows.
+
+The section below provides some basic pointers as to what is required in the way of setup.
+
 #### Setup
 
-Docker For Windows
+##### Docker For Windows
 
-​	Settings -> Shared Drives -> C
+Settings -> Shared Drives -> C
 
-Share C: Drive
+##### Share C: Drive
 
-​	Right-click C: -> Properties -> Sharing -> Share...
+Right-click C: -> Properties -> Sharing -> Share...
 
-Anti-Virus Exclusion
+##### Anti-Virus Exclusion
 
-​	Norton -> Settings -> Firewall -> Configure Public Network Exceptions -> File and Printer Sharing
+Norton -> Settings -> Firewall -> Configure Public Network Exceptions -> File and Printer Sharing
 
 
 
@@ -176,6 +180,20 @@ TODO
 ### WordPress
 
 TODO - [Dockerizing Wordpress with Nginx and PHP-FPM](https://www.google.com/amp/s/www.howtoforge.com/tutorial/dockerizing-wordpress-with-nginx-and-php-fpm/amp/)
+
+
+
+## Compose vs Swarm
+
+My Docker configurations have been created for development purposes and make use of Docker Compose.
+
+They typically specify the version numbers of Docker images in .env which means that they cannot be started directly using Docker Swarm.
+
+The workaround is to use Docker Compose as a pre-processor for Docker Swarm.
+
+```
+$ docker stack deploy -c <(docker-compose config) STACK_NAME
+```
 
 
 
