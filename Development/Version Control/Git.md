@@ -63,6 +63,19 @@ cat ~/.ssh/id_rsa
 
 
 
+#### Colours
+
+Change the colours for command line output using the following commands:
+
+```sh
+# git config --global color.ui auto
+git config --global color.diff.old "cyan"
+git config --global color.status.untracked "cyan"
+git config --global color.status.changed "yellow bold"
+```
+
+
+
 #### Troubleshooting
 
 If you still get prompted for the username then Git might be using https instead of ssh.
