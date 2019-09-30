@@ -36,11 +36,33 @@
 
 
 
+## Thoughts
+
+EC2 - Burstable
+
+NAT instance - YES
+
+Encryption - EBS + S3, not using KMS
+
+SSL - Nginx
+
+Networking - Elastic IP + Route 53
+
+Mail - SES / MailCow
+
+
+
 ## TODO
+
+Instance Scheduler
+
+​	[AWS Instance Scheduler](https://aws.amazon.com/solutions/instance-scheduler/)
+
+​	[Using AWS Instance Scheduler to Reduce Amazon EC2 or RDS cost](https://medium.com/@ahmeeddhon/using-aws-instance-scheduler-to-reduce-amazon-ec2-or-rds-cost-56c9eb374344)
 
 Security
 
-​	SSH agent forwarding
+​	SSH agent forwarding - ssh -A ec2-user@....
 
 ​	[Secure your instances with multi-factor authentication](https://aws.amazon.com/blogs/startups/securing-ssh-to-amazon-ec2-linux-hosts/)
 
