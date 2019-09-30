@@ -36,7 +36,7 @@ Avoid subnet collisions on public networks by specifying the default address poo
 
 #### Network debugging
 
-Spin up another container containing the network debugging tools, connected to the network of the oroginal container.
+Spin up another container containing the network debugging tools, connected to the network of the original container.
 
 ### Image Layers
 
