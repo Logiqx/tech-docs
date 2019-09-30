@@ -262,6 +262,8 @@ References:
 
 [Optimizing InnoDB Disk I/O](https://dev.mysql.com/doc/refman/8.0/en/optimizing-innodb-diskio.html) - Adjust the flush method (recommends benchmarks)
 
+[Clarification on MySQL innodb_flush_method variable](https://dba.stackexchange.com/questions/1568/clarification-on-mysql-innodb-flush-method-variable/1575#1575) - Explanation on fdatasync() vs fsync()
+
 [InnoDB Startup Options and System Variables](https://dev.mysql.com/doc/refman/8.0/en/innodb-parameters.html#sysvar_innodb_flush_method) - innodb_flush_method
 
 
