@@ -4,6 +4,8 @@
 
 Jenkins (Blue Ocean) - https://jenkins.io/
 
+I have started making some [notes](Jenkins.md) on Jenkins.
+
 e.g. Shared Components
 
 
