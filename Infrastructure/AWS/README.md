@@ -68,7 +68,7 @@ Security
 
 Time sync
 
-​	<https://aws.amazon.com/blogs/aws/keeping-time-with-amazon-time-sync-service/>
+​	<https://aws.amazon.com/blogs/aws/keeping-time-with-amazon-time-sync-service/> - Installed by default
 
 VPC endpoints - S3, ECR
 
