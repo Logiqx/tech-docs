@@ -42,4 +42,12 @@ The base image for deployment is on DockerHub:
 
 - [python-bs4](https://hub.docker.com/repository/docker/logiqx/python-bs4) - Python 3 + Beautiful Soup 4 on Alpine Linux
 
+The hardest bit of the python-bs4 build relates to [lxml](https://lxml.de/installation.html) but it is fully documented on [GitHub](https://github.com/Logiqx/python-bs4).
+
+BeautifulSoup and lxml can quickly be tested using the following Python script:
+
+```
+from bs4 import BeautifulSoup
+soup = BeautifulSoup("<html/>", "lxml")
+```
 

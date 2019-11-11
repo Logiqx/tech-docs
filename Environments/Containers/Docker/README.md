@@ -137,9 +137,86 @@ I've listed a number of my most frequently used [commands](Commands.md).
 
 
 
-## My Containers
+## Multi-stage Builds
 
-This section lists some of the containers that I have created using in Docker.
+Using a [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/) to convert a Notebook to a simple Python script is advantageous.
+
+I've used this approach in a number of my projects on GitHub:
+
+- [wca-db](https://github.com/Logiqx/wca-db/blob/master/Dockerfile) - World Cube Association - Scripts to download and optimise the database
+- [wca-ipy](https://github.com/Logiqx/wca-ipy/blob/master/Dockerfile) - iPython notebooks to produce (un)official rankings for the senior cubing community
+
+For example:
+
+```dockerfile
+# Base image versions
+ARG NOTEBOOK_VERSION=c39518a3252f
+ARG PYTHON_VERSION=3.8
+ARG ALPINE_VERSION=3.10
+
+# Jupyter notebook image is used as the builder
+FROM jupyter/base-notebook:${NOTEBOOK_VERSION} AS builder
+
+# Copy the required project files
+WORKDIR /home/jovyan/work/wca-db
+COPY --chown=jovyan:users python/*.*py* ./python/
+COPY --chown=jovyan:users sql/*.sql ./sql/
+
+# Convert Jupyter notebooks to regular Python scripts
+RUN jupyter nbconvert --to python python/*.ipynb && \
+    rm python/*.ipynb
+
+# Ensure project file permissions are correct
+RUN chmod 755 python/*.py && \
+    chmod 644 sql/*.sql
+
+# Create final image from Python 3 + Beautiful Soup 4 on Alpine Linux
+FROM logiqx/python-bs4:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
+
+# Install MySQL client
+RUN apk add --no-cache mysql-client=~10.3
+
+# Note: Jovian is a fictional native inhabitant of the planet Jupiter
+ARG PY_USER=jovyan
+ARG PY_GROUP=jovyan
+ARG PY_UID=1000
+ARG PY_GID=1000
+
+# Create the Python user and work directory
+RUN addgroup -g ${PY_GID} -S ${PY_GROUP} && \
+    adduser -u ${PY_UID} -S ${PY_USER} -G ${PY_USER} && \
+    mkdir -p /home/${PY_USER}/work && \
+    chown ${PY_USER} /home/${PY_USER}/work
+
+# Environment variables used by the Python scripts
+ENV MYSQL_HOSTNAME=mariadb
+ENV MYSQL_DATABASE=wca
+ENV MYSQL_USER=wca
+
+# Copy project files from the builder
+USER ${PY_USER}
+WORKDIR /home/${PY_USER}/work
+COPY --from=builder --chown=jovyan:jovyan /home/jovyan/work/ ./
+
+# Define the command / entrypoint
+CMD ["python3"]
+```
+
+
+
+## My Images
+
+This section lists some of the images that I have created using in Docker.
+
+### Python+ Beautiful Soup
+
+The base image for my Python deployments is on DockerHub:
+
+- [python-bs4](https://hub.docker.com/repository/docker/logiqx/python-bs4) - Python 3 + Beautiful Soup 4 on Alpine Linux
+
+The hardest bit of the python-bs4 build relates to [lxml](https://lxml.de/installation.html) but it is fully documented on [GitHub](https://github.com/Logiqx/python-bs4).
+
+
 
 ### Jupyter
 
@@ -239,9 +316,13 @@ Ivan Krizsan - [Time in Docker Containers](https://www.ivankrizsan.se/2015/10/31
 
 
 
-### Base Images
+### Small Images
 
-Alpine - [The 3 Biggest Wins When Using Alpine as a Base Docker Image](https://nickjanetakis.com/blog/the-3-biggest-wins-when-using-alpine-as-a-base-docker-image)
+A few nice articles relating to Alpine Linux:
+
+- [The 3 Biggest Wins When Using Alpine as a Base Docker Image](https://nickjanetakis.com/blog/the-3-biggest-wins-when-using-alpine-as-a-base-docker-image)
+- [Reduce Docker image sizes using Alpine](https://www.sandtable.com/reduce-docker-image-sizes-using-alpine/)
+- [Tips & Tricks with Alpine + Docker](http://blog.zot24.com/tips-tricks-with-alpine-docker/)
 
 Note: Image size is not the primary consideration when choosing a base OS but it is still quite cool.
 
