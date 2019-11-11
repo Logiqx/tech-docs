@@ -62,6 +62,12 @@ https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci
 
 
 
+## Reverse Proxy
+
+<https://wiki.jenkins.io/display/JENKINS/Jenkins+behind+an+NGinX+reverse+proxy>
+
+
+
 ## AWS CLI
 
 https://github.com/aws/aws-cli/issues/3553 - background
