@@ -1,106 +1,45 @@
 # Python
 
-[Python](https://www.python.org/) is my "go to" language.
-
-
-
-## Docker
-
-Build
-
-```
-docker build --tag=mynotebook .
-```
-
-
-
-Minimal Notebook:
-
-```sh
-docker pull jupyter/minimal-notebook
-
-# docker run --name notebook --mount source=scratch,target=/home/jovyan/work -p 8888:8888 -d jupyter/minimal-notebook
-
-docker run --name notebook --mount type=bind,source="C:/Mounts/Jupyter",target=/home/jovyan/work -p 8888:8888 -d jupyter/minimal-notebook
-
-docker start notebook
-docker logs notebook	(look for "Copy/paste this URL into your browser")
-docker stop notebook
-```
-
-Install Libraries:
-
-```sh
-docker exec notebook pip install beautifulsoup4
-docker exec notebook pip install lxml
-```
-
-PyMySQL:
-
-```sh
-docker exec notebook conda install pymysql
-
-docker run --name notebook2 --link mysql:mysql --mount source=scratch,target=/home/jovyan/scratch -p 8888:8888 -d jupyter/minimal-notebook
-```
-
-GitHub:
-
-```sh
-docker exec notebook git clone https://github.com/Logiqx/wca-ipy.git scratch/wca-ipy
-docker exec notebook git clone https://github.com/Logiqx/wca-spv.git scratch/wca-spv
-docker exec notebook ls -al scratch
-
-# docker exec notebook git --git-dir=scratch/wca-ipy/.git --work-tree=scratch/wca-ipy status
-
-docker exec notebook sh -c 'cd work/wca-ipy && git status'
-docker exec notebook sh -c "cd work/wca-ipy && git checkout -- 'Over 40s.ipynb'"
-docker exec notebook sh -c 'cd work/wca-ipy && git pull'
-```
-
-References:
-
-GitHub - [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks)
-GitHub - [Minimal Jupyter Notebook Stack](https://github.com/jupyter/docker-stacks/tree/master/minimal-notebook)
+[Python](https://www.python.org/) is my "go to" language for most projects.
 
 
 
 ## Python 2 to Python 3
 
-This section summarises the changes required to convert [wca-ipy](https://github.com/Logiqx/wca-ipy) from Python 2 to Python 3.
-
-References:
-
-* [Porting Python 2 Code to Python 3](https://docs.python.org/3/howto/pyporting.html)
+I have made some notes detailing some common code changes required when migrating from Python 2 to [Python 3](Python3.md).
 
 
 
-### General
+## Docker Images
 
-#### Print
+I have a number of GitHub projects which have been developed using [Jupyter Notebook](https://jupyter.org/) and deployed using regular [Python](https://www.python.org/).
 
-print -> print()
+Examining my Docker files and Docker Compose files provides a useful reference as to how this can be achieved.
 
-#### Integer Division
+### Development
 
-/ -> //
+My wca-db project uses Docker Compose for Jupyter Notebook and MariaDB.
 
-#### Dictionaries
+The Docker Compose files are within the [docker](https://github.com/Logiqx/wca-db/tree/master/docker) directory of the [project](https://github.com/Logiqx/wca-db) on GitHub.
 
-eventsDict.has_key(inputRow[0]) -> inputRow[0] in eventsDict
+Base Images:
+
+- Jupyter Docker Stacks - [GitHub](https://github.com/jupyter/docker-stacks) + [Docker Hub](https://hub.docker.com/u/jupyter/)
+- Minimal Jupyter Notebook Stack [GitHub](https://github.com/jupyter/docker-stacks/tree/master/minimal-notebook)  + [Docker Hub](https://hub.docker.com/r/jupyter/minimal-notebook/)
+
+### Deployment
+
+A number of my projects are developed with Jupyter Notebook but deployed as regular Python.
+
+The Dockerfile in the project root uses a multi-stage build to convert the .ipynb files to regular .py files and create a lightweight Python image for deployment.
+
+GitHub repositories:
+
+- [wca-db](https://github.com/Logiqx/wca-db) - World Cube Association - Scripts to download and optimise the database
+- [wca-ipy](https://github.com/Logiqx/wca-ipy) - iPython notebooks to produce (un)official rankings for the senior cubing community
+
+The base image for deployment is on DockerHub:
+
+- [python-bs4](https://hub.docker.com/repository/docker/logiqx/python-bs4) - Python 3 + Beautiful Soup 4 on Alpine Linux
 
 
-
-### Libraries
-
-#### URLLib
-
-urllib2 -> urllib
-
-#### CSV Reader
-
-with open(fn, 'rb') -> with open(fn, 'r')
-
-#### CSV Writer
-
-with open(fn, 'wb') -> with open(fn, 'w')
-csv.writer(f, quoting = csv.QUOTE_MINIMAL) -> csv.writer(f, quoting = csv.QUOTE_MINIMAL, lineterminator = os.linesep)
