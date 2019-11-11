@@ -8,6 +8,12 @@
 
 
 
+## AWS CLI
+
+I have made some notes on building Docker images containing the [AWS CLI](CLI.md).
+
+
+
 ## Various
 
 **Database** - Aurora, RDS (MySQL, MariaDB, Postgres), DynamoDB, ElastiCache

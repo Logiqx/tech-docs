@@ -14,13 +14,13 @@ Run from command line:
 docker run -d -v jenkins_home:/var/jenkins_home -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts-alpine
 ```
 
-Access Jenkins
+Access Jenkins via a web browser:
 
 ```
 http://localhost:8080/
 ```
 
-Unlock Jenkins
+Unlock Jenkins by checking for the key in the logs:
 
 ```
 docker logs wca_jenkins_1
@@ -28,11 +28,59 @@ docker logs wca_jenkins_1
 
 
 
+## Docker Compose
+
+Another way to start Jenkins is using Docker Compose.
+
+.env
+
+```
+# Prefix for image names, container names and volume names
+COMPOSE_PROJECT_NAME=custom
+
+# Desired version of Jenkins (Official Docker image)
+JENKINS_VERSION=lts-alpine
+
+# Tag for the custom Jenkins image
+PROJECT_JENKINS_VERSION=1.0
+```
+
+docker-compose.yml
+
+```
+version: '3.1'
+services:
+  jenkins:
+    build:
+      context: ./jenkins
+      args:
+        JENKINS_VERSION: lts-alpine
+    image: ${COMPOSE_PROJECT_NAME:-custom}_jenkins:${PROJECT_JENKINS_VERSION:-latest}-${JENKINS_VERSION:-latest}
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  jenkins_home:
+```
+
+Note: The bind mount of /var/run/docker.sock allows Docker commands to be used from Jenkins but it is NOT a recommended practice.
 
 
-## Simple Tasks
 
-### Hello World
+## Hello World
+
+Once Jenkins is installed it is time to create the simplest possible job!
 
 https://code-maven.com/jenkins-pipeline-hello-world
 
@@ -57,8 +105,14 @@ https://jenkins.io/doc/pipeline/tour/hello-world/
 
 ## Docker in Jenkins
 
-https://medium.com/faun/using-docker-in-jenkins-cba6b8070756
-https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci
+I have made some notes on running [Docker containers](Docker.md) from inside Jenkins via the Docker socket.
+
+
+
+## AWS CLI
+
+I have made some notes on using the [AWS CLI](AWS.md) from inside Jenkins, optionally using a custom Docker image.
+
 
 
 
@@ -67,92 +121,3 @@ https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci
 <https://wiki.jenkins.io/display/JENKINS/Jenkins+behind+an+NGinX+reverse+proxy>
 
 
-
-## AWS CLI
-
-https://github.com/aws/aws-cli/issues/3553 - background
-
-### Reference #1
-
-https://hub.docker.com/r/boycey/alpine-aws-cli/
-
-```
-FROM alpine:3.10.0
-
-RUN apk --no-cache update && \
-    apk --no-cache add bash  python py-pip py-setuptools ca-certificates curl less && \
-    pip --no-cache-dir install awscli && \
-    rm -rf /var/cache/apk/*
-```
-
-https://docs.docker.com/engine/reference/commandline/build/ - command line reference
-
-My approach:
-
-```
-# Install AWS CLI
-RUN apk add --no-cache python && \
-    apk add --no-cache --virtual .build-deps py-pip && \
-    pip install --no-cache-dir awscli && \
-	apk del .build-deps
-```
-
-<https://stackoverflow.com/questions/49118579/alpine-dockerfile-advantages-of-no-cache-vs-rm-var-cache-apk>
-
-### Reference #2
-
-```
-FROM docker:18.06
-
-RUN apk update && \
-apk -Uuv add python py-pip && \
-pip install awscli && \
-apk --purge -v del py-pip && \
-rm /var/cache/apk/*
-```
-
-### Trial Install
-
-```
-docker exec -it --user root stoic_yalow sh
-apk --no-cache update
-apk --no-cache add python py-pip
-pip --no-cache-dir install awscli
-```
-
-### Testing Install
-
-```
-pipeline {
-    agent { label 'master' }
-    stages {
-        stage('build') {
-            steps {
-                sh script: 'aws --version'
-            }
-        }
-    }
-}
-```
-
-### Bundle Install?
-
-https://docs.aws.amazon.com/cli/latest/userguide/install-bundle.html#install-bundle-user
-
-User only install:
-
-```
-curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-unzip awscli-bundle.zip
-./awscli-bundle/install -b ~/bin/aws
-```
-
-System install:
-
-```
-curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-unzip awscli-bundle.zip
-sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-```
-
-Note: Requires Python
