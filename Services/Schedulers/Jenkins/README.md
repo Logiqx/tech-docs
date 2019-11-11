@@ -115,6 +115,11 @@ I have made some notes on using the [AWS CLI](AWS.md) from inside Jenkins, optio
 
 
 
+## Email Notification
+
+I have made some notes on configuring [email notification](Email.md) from inside Jenkins.
+
+
 
 ## Reverse Proxy
 

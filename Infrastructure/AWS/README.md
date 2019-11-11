@@ -40,6 +40,8 @@ I have made some notes on building Docker images containing the [AWS CLI](CLI.md
 
 [Terraform](../IaC/Terraform.md) - Links, etc.
 
+[SES](SES.md) - Sending emails via STMP
+
 
 
 ## Thoughts
@@ -53,8 +55,6 @@ Encryption - EBS + S3, not using KMS
 SSL - Nginx
 
 Networking - Elastic IP + Route 53
-
-Mail - SES / MailCow
 
 
 
