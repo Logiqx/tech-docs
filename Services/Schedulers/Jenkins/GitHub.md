@@ -24,6 +24,12 @@ In the case of AWS this means suitable ACL and Security Group entries. Don't for
 
 
 
+## GitHub User
+
+It is advisable to create a dedicated user on GitHub for Jenkins. This user can then be added to the appropriate projects as a contributor to limit the scope of what they can modify.
+
+
+
 ## GitHub Project
 
 Using the GitHub repository use "Settings" -> "Webhooks" -> "Add webhook" to enter the Jenkins URL.
@@ -38,7 +44,30 @@ It is worth mentioning that the "Recent Deliveries" can be redelivered for testi
 
 
 
-## Jenkins
+## Jenkins Environment
+
+To gain access to the Jenkins container you can use `docker exec -it wca_jenkins_1 sh` which will give you shell access. Any changes to git configuration will be safely persisted in the Docker volume.
+
+Under some circumstances it may be useful to store GitHub credentials with the jenkins user. This can be achieved by issuing the following command inside the Docker container:
+
+```
+git config --global credential.helper store
+```
+
+Note: An alternative approach is to bind mount ~/.git-credentials from the Docker host but only if it is the same GitHub user.
+
+To set the username and email address for future commits use the following commands:
+
+```
+git config --global user.name "Someone"
+git config --global user.email "someone@somewhere.com"
+```
+
+Note: An alternative approach is to bind mount ~/.gitconfig from the Docker host but only if it is the same GitHub user.
+
+
+
+## Jenkins Project
 
 Most tutorials describe GitHub hooks in the context of a freestyle project. These tutorials are all pretty straightforward but it is a little trickier for a Pipeline job.
 
