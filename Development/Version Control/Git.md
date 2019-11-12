@@ -90,6 +90,8 @@ url = ssh://git@github.com/USERNAME/REPOSITORY.git
 
 
 
+## Releases
+
 ### Tagging
 
 A couple of my projects use Git tags to trigger automated builds on DockerHub:
@@ -103,6 +105,19 @@ Both use lightweight tags as described in the [basics of tagging](https://git-sc
 git tag <tagname>
 git push origin <tagname>
 ```
+
+### Commit IDs
+
+The git revision can be useful for CI/CD builds since it is unique and can be useful as a Docker tag.
+
+Here are two simple commands to get the Git commit id:
+
+```
+git describe --always --abbrev=12
+git rev-parse --short=12 HEAD
+```
+
+
 
 
 
