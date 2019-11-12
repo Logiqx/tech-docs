@@ -51,3 +51,13 @@ from bs4 import BeautifulSoup
 soup = BeautifulSoup("<html/>", "lxml")
 ```
 
+### References
+
+It should be noted that there can be problems with Python images built from Alpine Linux.
+
+Some useful articles are listed below:
+
+- [The best Docker base image for your Python application (July 2019)](https://pythonspeed.com/articles/base-image-python-docker-images/)
+
+- [Broken by default: why you should avoid most Dockerfile examples](https://pythonspeed.com/articles/dockerizing-python-is-hard/)
+
