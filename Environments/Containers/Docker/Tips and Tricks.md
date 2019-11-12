@@ -1,18 +1,32 @@
 # Tips and Tricks
 
-## DockerCon18 Europe
+## Presentations
 
-*Docker Captain Brandon Mitchell will help you accelerate your adoption of Docker containers by delivering tips and tricks on getting the most out of Docker. Topics include managing disk usage, preventing subnet collisions, debugging container networking, understanding image layers, getting more value out of the default volume driver, and solving the UID/GID permission issues with volumes in a way that allows images to be portable from any developer laptop and to production.*
+### DockerCon18 Europe
 
-Video - [Tips and Tricks of the Docker Captains](https://www.youtube.com/watch?v=fdB31LScQzY&list=PLkA60AVN3hh_DVyQ13qGheO_Jg7jcAPcv&index=10)
+Brandon Mitchell - [Tips and Tricks of the Docker Captains](https://www.youtube.com/watch?v=fdB31LScQzY&list)
 
-The slides are available on [GitHub](https://github.com/sudo-bmitch/presentations/tree/master/dc2018eu)
+The slides are available on [GitHub.](https://github.com/sudo-bmitch/presentations/tree/master/dc2018eu)
+
+### DockerCon19 San Francisco
+
+Brandon Mitchell - [Tips and Tricks of the Docker Captains](https://www.youtube.com/watch?v=woBI466WMR8)
+
+The slides are available on [GitHub](https://github.com/sudo-bmitch/presentations/tree/master/dc2019).
+
+
+
+## Tips
 
 ### Logging
 
-#### Log file sizes
+The Docker daemon can be configured by tweaking `/etc/docker/daemon.json`.
 
-Limit the size of log files from new containers by tweaking /etc/docker/dameon.json:
+This is can also be done through in Settings -> GUI (Advanced) on Docker for Windows
+
+#### File Sizes
+
+Limit the size of log files for new containers as follows:
 
 ```json
 {
@@ -20,23 +34,43 @@ Limit the size of log files from new containers by tweaking /etc/docker/dameon.j
 }
 ```
 
-Note: This is done through in Settings -> GUI (Advanced) on Docker for Windows
+#### Log Driver
+
+The local logging driver was introduced in Docker 18.09, released 2018-11-08.
+
+Switch to the optimized driver for new containers as follows:
+
+```json
+{
+    "log-driver": "local"
+}
+```
+
+
+
+
 
 ### Networking
 
 #### Subnet Collisions
 
-Avoid subnet collisions on public networks by specifying the default address pools:
+Avoid subnet collisions on other networks by using BIP and specifying default address pools:
 
 ```json
 {
-    "default-address-pools"
+    "bip": "10.15.0.1/24",
+    "default-address-pools": [
+        {"base": "10.20.0.0/16", "size": 24},
+        {"base": "10.40.0.0/16", "size": 24}
+    ]
 }
 ```
 
 #### Network debugging
 
 Spin up another container containing the network debugging tools, connected to the network of the original container.
+
+
 
 ### Image Layers
 
@@ -45,7 +79,7 @@ Spin up another container containing the network debugging tools, connected to t
 Identify what has been added / changed / deleted in each layer:
 
 ````sh
-DOCKER_BUILDKIT=0 docker build --no-cache -rm=false .
+docker image build --no-cache -rm=false .
 docker container diff [container]
 ````
 
@@ -69,11 +103,33 @@ They are particularly useful for languages such as Java, Go, etc.
 
 Note: The build layers are not shipped with the image but they are cached on the build server.
 
+
+
+### Build Cache
+
+You can specify the garbage collection policy in daemon.json:
+
+```json
+{
+    "builder": {
+        "gc": {
+            "enabled": true,
+            "policy": [
+                {"keepStorage": "512MB", "filter": ["unused-for=168h"]},
+                {"keepStorage": "30GB", "all": true}
+            ]
+        }
+    }
+}
+```
+
+
+
 ### Mounts
 
 #### BuildKit
 
-This can be particularly useful in dockerfiles as files can be used in the build but excluded from the image:
+This can be particularly useful as files can be used in the build but excluded from the final image:
 
 ```
 --mount=type=bind
@@ -89,6 +145,8 @@ It is possible to mount NFS and EXT4 volumes in Docker containers.
 
 An overlay file system ensures that writes to volumes are only visible to the container.
 
+
+
 ### Development
 
 #### Fixing UID / GID
@@ -96,5 +154,7 @@ An overlay file system ensures that writes to volumes are only visible to the co
 Different UID / GID on the host can be problematic on developer machines.
 
 Brandon has created a script to fix these issues when the container starts up.
+
+Check the slide decks on GitHub!
 
 
