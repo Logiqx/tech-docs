@@ -2,6 +2,8 @@
 
 ## Installation
 
+### Docker Run
+
 Pull from Docker Hub:
 
 ```
@@ -23,14 +25,14 @@ http://localhost:8080/
 Unlock Jenkins by checking for the key in the logs:
 
 ```
-docker logs wca_jenkins_1
+docker logs [container]
 ```
 
 
 
-## Docker Compose
+### Docker Compose
 
-Another way to start Jenkins is using Docker Compose.
+Another way to run Jenkins is using Docker Compose.
 
 .env
 
@@ -74,11 +76,21 @@ volumes:
   jenkins_home:
 ```
 
-Note: The bind mount of /var/run/docker.sock allows Docker commands to be used from Jenkins but it is NOT a recommended practice.
+Note: The bind mount of /var/run/docker.sock allows Docker commands to be used from Jenkins but it is NOT a recommended practice. This is explained in a separate document.
 
 
 
-## Hello World
+## Setting up a Reverse Proxy
+
+A reverse proxy might be required, certainly in the case of an HTTPS requirement.
+
+The following links might prove useful:
+
+- [Jenkins behind an NGinX reverse proxy](https://wiki.jenkins.io/display/JENKINS/Jenkins+behind+an+NGinX+reverse+proxy)
+
+
+
+## Running Hello World
 
 Once Jenkins is installed it is time to create the simplest possible job!
 
@@ -103,26 +115,68 @@ https://jenkins.io/doc/pipeline/tour/hello-world/
 
 
 
-## Docker in Jenkins
+## Running Docker Containers
 
 I have made some notes on running [Docker containers](Docker.md) from inside Jenkins via the Docker socket.
 
 
 
-## AWS CLI
+## Running AWS CLI Commands
 
 I have made some notes on using the [AWS CLI](AWS.md) from inside Jenkins, optionally using a custom Docker image.
 
 
 
-## Email Notification
+## Job Triggers
+
+### Build Periodically
+
+Include the relevant code in the pipeline script.
+
+```
+pipeline {
+    agent ...
+    triggers {
+        cron('10 4 * * *')
+    }
+    ...
+}
+```
+
+### Build Dependencies
+
+Include the relevant code in the pipeline script.
+
+```
+pipeline {
+    agent ...
+    triggers {
+        upstream(upstreamProjects: 'job1, job2', threshold: hudson.model.Result.SUCCESS)
+    }
+    ...
+}
+```
+
+### GitHub Triggers
+
+I have made some notes on [GitHub hooks](GitHub.md) so that builds can be triggered when changes are pushed to GitHub.
+
+
+
+## Email Notifications
 
 I have made some notes on configuring [email notification](Email.md) from inside Jenkins.
 
 
 
-## Reverse Proxy
+## Pipeline Examples
 
-<https://wiki.jenkins.io/display/JENKINS/Jenkins+behind+an+NGinX+reverse+proxy>
+I've created some [examples](Examples.md) which include the use of Docker and Git.
 
 
+
+## Reference
+
+A few useful links about Jenkins Pipelines:
+
+- [How to Use the Jenkins Declarative Pipeline](https://www.blazemeter.com/blog/how-to-use-the-jenkins-declarative-pipeline/)
