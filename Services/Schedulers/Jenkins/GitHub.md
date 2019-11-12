@@ -93,6 +93,8 @@ pipeline {
 
 I found out about the need for the pipeline trigger property on the [Jenkins issue log](https://issues.jenkins-ci.org/browse/JENKINS-35132?focusedCommentId=294758&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-294758). Prior to this discovery, I could see the GitHub call in the Jenkins log but the Jenkins pipeline was not being started.
 
+If you want to only run builds for a specific branch (e.g. master) then you can use SCM polling as described on [Stack Overflow](https://stackoverflow.com/questions/5784329/how-can-i-make-jenkins-ci-with-git-trigger-on-pushes-to-master).
+
 
 
 
