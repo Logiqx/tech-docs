@@ -25,3 +25,13 @@ nginx                      latest          73acd1f0cfad        12 months ago    
 
 I've made some notes in relation to [PHP](PHP.md).
 
+
+
+## HTTPS
+
+The most difficult aspect of HTTPS is maintaining SSL certificates.
+
+A nice article has been created which explains the use of [Let's Encrypt](https://letsencrypt.org/) and NGINX with Docker:
+
+[Nginx and Let’s Encrypt with Docker in Less Than 5 Minutes](https://medium.com/@pentacent/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71)
+
