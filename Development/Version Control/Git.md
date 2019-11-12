@@ -90,6 +90,22 @@ url = ssh://git@github.com/USERNAME/REPOSITORY.git
 
 
 
+### Tagging
+
+A couple of my projects use Git tags to trigger automated builds on DockerHub:
+
+- [Python 3 + Beautiful Soup 4 on Alpine Linux](https://github.com/Logiqx/python-bs4)
+- [AWS Command Line Interface for Docker (Alpine Linux)](https://github.com/Logiqx/aws-cli)
+
+Both use lightweight tags as described in the [basics of tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
+
+```sh
+git tag <tagname>
+git push origin <tagname>
+```
+
+
+
 #### Links
 
 [Connecting to GitHub with SSH](https://help.github.com/en/articles/connecting-to-github-with-ssh)
