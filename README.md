@@ -58,7 +58,7 @@ I've kept got a number of useful links relating to [Linux](Operating_Systems/Lin
 
 NGINX, Apache, etc.
 
-I've started to make a few notes on [web servers](Services/Web%20Servers/README.md).
+I've started to make a few notes on [web servers](Services/Web_Servers/README.md).
 
 
 
@@ -90,7 +90,7 @@ I've started to make a few notes on [languages](Development/Languages/README.md)
 
 I have been using Git as my version control system since the start of 2016.
 
-I've started to make a few notes on [Version Control](Development/Version%20Control/README.md).
+I've started to make a few notes on [Version Control](Development/Version_Control/README.md).
 
 
 
