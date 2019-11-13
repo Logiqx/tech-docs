@@ -1,6 +1,6 @@
 # Simple Email Service (SES)
 
-The simple email service is perfect for sending e-mails from EC2 instances.
+The [Simple Email Service](https://aws.amazon.com/ses/) (SES) is perfect for sending e-mails from EC2 instances.
 
 For example, Jenkins pipelines can use SES to send failure messages to a chosen e-mail address.
 

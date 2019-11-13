@@ -171,6 +171,10 @@ pipeline {
 
 I have made some notes on [GitHub hooks](GitHub.md) so that builds can be triggered when changes are pushed to GitHub.
 
+### URL Triggers
+
+The [URLTrigger](https://wiki.jenkins.io/display/JENKINS/URLTrigger+Plugin) plugin can be used to trigger jobs when a URL changes.
+
 
 
 ## Email Notifications

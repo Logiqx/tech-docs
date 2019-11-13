@@ -2,80 +2,39 @@
 
 ## EC2
 
-### Instance Types
-
-The various [EC2 Instance Types](https://aws.amazon.com/ec2/instance-types/) are listed on the AWS website.
+[Elastic Compute Cloud (Amazon EC2)](EC2.md) is a web service that provides secure, resizable compute capacity in the cloud. It is designed to make web-scale cloud computing easier for developers.
 
 
 
-### Costs
+## Containers
 
-The costs of EC2 instances will vary over time but I recorded some examples of reserved instance pricing from [March 2019](Compute_Costs.md).
+There are several options when it comes to running Docker containers in AWS:
 
-Latest EC2 prices:
+[Elastic Container Registry (ECR)](ECR.md) - Easily store, manage, and deploy container images
 
-- [Reserved Instances](https://aws.amazon.com/ec2/pricing/reserved-instances/pricing/)
-- [On Demand Instances](https://aws.amazon.com/ec2/pricing/on-demand/)
+[Elastic Container Service (ECS)](ECS.md) - Run containerized applications in production
 
+[Elastic Kubernetes Service (EKS)](https://aws.amazon.com/eks/) - Highly available, scalable, and secure Kubernetes service
 
+[Fargate](https://aws.amazon.com/fargate/) - Run containers without managing servers or clusters
 
-### Common Setup
-
-**Apply System Updates**
-
-```
-sudo yum update
-```
-
-**Install HTOP**
-
-```
-sudo yum install htop
-```
-
-**Install Git**
-
-```
-sudo yum install git
-```
-
-Change the git colours using the following commands:
-
-```sh
-git config --global color.diff.old "cyan"
-git config --global color.status.untracked "cyan"
-git config --global color.status.changed "yellow bold"
-```
-
-Note: This was copied from the page describing [git](../../Development/Version_Control/Git.md).
-
-**Install Docker**
-
-```
-sudo yum install docker
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo usermod -aG docker $USER
-```
-
-Note: This was copied from the page describing [installation and configuration](../../Environments/Containers/Docker/Installation.md) of Docker.
-
-**Install Docker Compose**
-
-```
-sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-```
-
-Note: This was copied from the page describing [installation and configuration](../../Environments/Containers/Docker/Installation.md) of Docker.
+Note: It is also possible to run Docker (via Compose, Swarm or Kubernetes) on bare EC2 instances.
 
 
 
+## Lightsail
 
-## Services
+Virtual servers, storage, databases, and networking for a low, predictable price.
 
-Interesting AWS services:
+This is likely to be simpler than setting everything up yourself; VPC, Route 53, Elastic IP, EC2, EBS, RDS, etc.
 
-Lightsale, ECR, ECS, EKS, Fargate, Lambda, ELB
+Details about [Lightsail](https://aws.amazon.com/lightsail/) can be found at the AWS web page.
 
-[../../Development/Version_Control/Git.md)]: 
+
+
+## Lambda
+
+Run code without thinking about servers. Pay only for the compute time you consume.
+
+Details about [Lambda](https://aws.amazon.com/lambda/) can be found at the AWS web page.
+

@@ -4,8 +4,12 @@ There are many blogs which describe how to run Docker containers from Jenkins.
 
 Here are just a small selection:
 
-- [Using Docker in Jenkins](https://medium.com/faun/using-docker-in-jenkins-cba6b8070756)
-- [The simple way to run Docker-in-Docker for CI](https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci)
+- [Using Docker in Jenkins](https://medium.com/faun/using-docker-in-jenkins-cba6b8070756) on medium.com
+
+- [The simple way to run Docker-in-Docker for CI](https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci) on Get into DevOps.com
+
+- [Using docker in a dockerized Jenkins container](https://forums.docker.com/t/using-docker-in-a-dockerized-jenkins-container/322) on the Docker forums
+
 
 Mounting `/var/run/docker.sock` does indeed work but it is NOT recommended for security reasons.
 
@@ -50,4 +54,12 @@ Bind mounting the Docker socket from the host into the container can be done fro
 This allows the Jenkins container to communicate directly with the Docker daemon on the host.
 
 As described earlier, extreme caution should be exercised when using this approach. If an attacker should gain access to Jenkins via it's GUI or APIs or the container itself you will be in big trouble!
+
+
+
+## Usage
+
+### Image Builds
+
+[Building your first Docker image with Jenkins 2: Guide for developers](https://getintodevops.com/blog/building-your-first-docker-image-with-jenkins-2-guide-for-developers) - build and publish automatically
 

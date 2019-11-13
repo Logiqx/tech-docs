@@ -143,6 +143,14 @@ docker tag petition:$(git rev-parse --short=12 HEAD) petition:latest
 
 
 
+## Automation
+
+It is easy to automate builds on DockerHub so that changes to a git repository trigger an image build.
+
+[Docker Hub: Configure Automated Builds from GitHub and BitBucket](https://docs.docker.com/docker-hub/builds/link-source/)
+
+
+
 ## My Images
 
 This section lists some of the images that I have created using in Docker.

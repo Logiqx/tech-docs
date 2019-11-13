@@ -101,6 +101,24 @@ docker swarm leave --force
 
 
 
+## Long-Running or One-Off?
+
+Docker is perfectly suited to short-lived tasks as well as long-running services.
+
+[Docker Tip #42: Using Docker for Long Running and One off Tasks](https://nickjanetakis.com/blog/docker-tip-42-using-docker-for-long-running-and-one-off-tasks)
+
+
+
+## Registries
+
+The obvious container registry options when running Docker container on AWS are [DockerHub](https://hub.docker.com/) and [Elastic Container Registry (ECR)](../../../Infrastructure/AWS/ECR.md).
+
+[Docker Hub vs Creating a Local Docker Registry](https://code-maze.com/docker-hub-vs-creating-docker-registry/)
+
+[Comparing Container Image Registries- DockerHub, Amazon EC2, and JFrog Artifactory](https://www.nirmata.com/2017/03/14/comparing-container-image-registries-dockerhub-amazon-ec2-and-jfrog-artifactory/)
+
+
+
 ## Orchestration
 
 ### Compose vs Swarm

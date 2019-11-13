@@ -2,9 +2,15 @@
 
 ## General
 
+### DNS
+
+Amazon [Route 53](https://aws.amazon.com/route53/) is a reliable and cost-effective way to route end users to Internet applications.
+
+For my personal domains, I use it to route website traffic to AWS and e-mail traffic to eUKhost.
+
 ### Aliases
 
-Route53 provides aliases but in other DNS servers it may be necessary to use CNAME records:
+Route 53 provides aliases but in other DNS servers it may be necessary to use CNAME records:
 
 - [CNAME record](https://en.m.wikipedia.org/wiki/CNAME_record) on Wikipedia
 

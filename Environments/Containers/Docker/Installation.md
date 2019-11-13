@@ -112,3 +112,13 @@ You can specify the garbage collection policy in daemon.json:
 }
 ```
 
+
+
+## Orchestration
+
+### Auto-Start Containers
+
+Containers can be started automatically by setting their restart policy.
+
+This is explained in the Docker documentation - [Start containers automatically](https://docs.docker.com/config/containers/start-containers-automatically/).
+

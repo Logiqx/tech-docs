@@ -29,7 +29,7 @@ Base Images:
 
 ### Deployment
 
-A number of my projects are developed with Jupyter Notebook but deployed as regular Python.
+A number of my projects are developed in the [Jupyter Base Notebook](https://hub.docker.com/r/jupyter/base-notebook) but deployed as [Python](https://hub.docker.com/_/python).
 
 The Dockerfile in the project root uses a multi-stage build to convert the .ipynb files to regular .py files and create a lightweight Python image for deployment.
 

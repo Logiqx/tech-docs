@@ -4,9 +4,11 @@
 
 ### Getting Started
 
-[Getting started with Amazon Elastic Container Service](https://aws.amazon.com/ecs/getting-started/) on AWS
+Amazon Elastic Container Service ([ECS](https://aws.amazon.com/ecs/)) is a highly scalable, high-performance [container](https://aws.amazon.com/containers/) orchestration service that supports [Docker](https://aws.amazon.com/docker/) containers and allows you to easily run and scale containerized applications on AWS. A couple of introductory pages:
 
-[Deploy Docker Containers on Amazon Elastic Container Service (Amazon ECS)](https://aws.amazon.com/getting-started/tutorials/deploy-docker-containers/)
+- [Getting started with Amazon Elastic Container Service](https://aws.amazon.com/ecs/getting-started/) on AWS
+
+- [Deploy Docker Containers on Amazon Elastic Container Service (Amazon ECS)](https://aws.amazon.com/getting-started/tutorials/deploy-docker-containers/)
 
 
 
