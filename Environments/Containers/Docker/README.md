@@ -22,7 +22,7 @@ I've also made some notes relating to [Windows](Windows.md) which is my laptop O
 
 I started off by working through "Get started with Docker for Windows" and "Get Started with Docker".
 
-A summary of the commands used is below but the full output has also been thoroughly [documented](Get%20Started.md).
+A summary of the commands used is below but the full output has also been thoroughly [documented](Get_Started.md).
 
 
 
@@ -165,7 +165,7 @@ I've listed a number of my most frequently used [commands](Commands.md).
 
 ## Tips and Tricks
 
-I've have collated random [Tips and Tricks](Tips%20and%20Tricks.md) from the Docker Captains.
+I've have collated random [Tips and Tricks](Tips_and_Tricks.md) from the Docker Captains.
 
 
 
