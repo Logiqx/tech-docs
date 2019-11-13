@@ -112,6 +112,12 @@ I endeavour to make both as restrictive as possible for my VPNs - "belt and brac
 
 AWS [WAF](https://aws.amazon.com/waf/) gives control over which traffic to allow or block to web applications by defining customizable web security rules. You can deploy AWS WAF in many different ways.
 
+#### Access Controls
+
+Identity and Access Management ([IAM](https://aws.amazon.com/iam/)) enables management of access to AWS services and resources securely. Using IAM, you can create and manage AWS users and groups, and use permissions to allow and deny their access to AWS resources.
+
+Permissions can also be granted to specific machines, thus avoiding the need for secrets to be stored on disk. I have documented some [example](IAM.md) profiles on a separate page.
+
 #### Encryption
 
 Data should be encrypted when in transit and at rest.
@@ -119,12 +125,6 @@ Data should be encrypted when in transit and at rest.
 Ensuring that data is encrypted at rest is extremely easy on AWS - e.g. [EBS Encryption](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html) + [S3 Encryption](https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html).
 
 Note: For my personal projects, I just use the default AWS encryption rather than using KMS (see below).
-
-#### Access Controls
-
-Identity and Access Management ([IAM](https://aws.amazon.com/iam/)) enables management of access to AWS services and resources securely. Using IAM, you can create and manage AWS users and groups, and use permissions to allow and deny their access to AWS resources.
-
-Permissions can also be granted to specific machines, thus avoiding the need for secrets to be stored on disk. I have documented some [example](IAM.md) profiles on a separate page.
 
 #### Key Management Service (KMS)
 
