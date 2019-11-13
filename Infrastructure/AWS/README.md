@@ -32,7 +32,9 @@ I have made some notes on building Docker images containing the [AWS CLI](CLI.md
 
 ## Notes
 
-[Compute](Compute.md) - Instance Types, Costs, etc.
+[Compute](Compute.md) + [ECS](ECS.md) - Instance Types, Costs, etc.
+
+[Identify + Access Management](IAM.md) - Example profiles
 
 [Storage](Storage.md) - EBS, EFS, Persistence, etc.
 
@@ -74,15 +76,17 @@ Security
 
 Time sync
 
-​	<https://aws.amazon.com/blogs/aws/keeping-time-with-amazon-time-sync-service/> - Installed by default
+​	https://aws.amazon.com/blogs/aws/keeping-time-with-amazon-time-sync-service/ - Installed by default
 
 VPC endpoints - S3, ECR
 
-​	<https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html>
+​	https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html
+
+​	https://docs.aws.amazon.com/AmazonECS/latest/developerguide/vpc-endpoints.html
 
 Docker
 
-​	<https://docs.docker.com/config/containers/start-containers-automatically/>
+​	https://docs.docker.com/config/containers/start-containers-automatically/
 
 
 
@@ -96,7 +100,7 @@ Docker
 
 [Docker Hub vs Creating a Local Docker Registry](https://code-maze.com/docker-hub-vs-creating-docker-registry/) - maybe I'll use ECR?
 
-​	[Comparing Container Image Registries- DockerHub, Amazon EC2, and JFrog Artifactory](https://www.nirmata.com/2017/03/14/comparing-container-image-registries-dockerhub-amazon-ec2-and-jfrog-artifactory/)
+[Comparing Container Image Registries- DockerHub, Amazon EC2, and JFrog Artifactory](https://www.nirmata.com/2017/03/14/comparing-container-image-registries-dockerhub-amazon-ec2-and-jfrog-artifactory/)
 
 ### Jenkins
 

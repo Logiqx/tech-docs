@@ -252,6 +252,10 @@ A few nice articles relating to Alpine Linux:
 - [Tips & Tricks with Alpine + Docker](http://blog.zot24.com/tips-tricks-with-alpine-docker/)
 - [Alpine Dockerfile Advantages of --no-cache Vs. rm /var/cache/apk/*](https://stackoverflow.com/questions/49118579/alpine-dockerfile-advantages-of-no-cache-vs-rm-var-cache-apk)
 
+The latest packages for Alpine Linux can be viewed online:
+
+- [Alpine Linx Packages](https://pkgs.alpinelinux.org/package/v3.10/main/x86_64/python3)
+
 Note: Image size is not the primary consideration when choosing a base OS but it is still quite cool.
 
 

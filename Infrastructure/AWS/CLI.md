@@ -6,6 +6,8 @@ There is no official Docker image containing the AWS CLI so it must be built fro
 
 A thread exists on [GitHub](https://github.com/aws/aws-cli/issues/3553) discussing the absence of such an image on DockerHub.
 
+The latest version of the AWS CLI can be found on [pypi.org](https://pypi.org/project/awscli/).
+
 
 
 ## Custom Docker Image
@@ -43,6 +45,36 @@ CMD ["help"]
 
 
 
+### Example Usage
+
+Start EC2 instance from command line:
+
+```
+docker run --rm batch_aws aws ec2 start-instances --region us-east-1 --instance-ids i-xxxxxxxxxxxxxxxxx
+```
+
+Stop EC2 instance from command line:
+
+```
+docker run --rm batch_aws aws ec2 stop-instances --region us-east-1 --instance-ids i-xxxxxxxxxxxxxxxxx
+```
+
+Check EC2 instance from command line:
+
+```
+docker run --rm batch_aws aws ec2 describe-instances --region us-east-1 --instance-ids i-xxxxxxxxxxxxxxxxx
+```
+
+
+
+### TODO
+
+Install jq so that JSON can be easily parsed:
+
+- [jq Manual](https://stedolan.github.io/jq/manual/#Invokingjq) (development version)
+
+
+
 ## Bundle Install
 
 On Linux, macOS, or Unix, you can use the bundled installer to install version 1 of the AWS Command Line Interface (AWS CLI). The bundled installer includes all dependencies and can be used offline.
@@ -77,7 +109,7 @@ Useful pages provided by AWS:
 - [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 - [Install the AWS CLI version 1 Using the Bundled Installer (Linux, macOS, or Unix)](https://docs.aws.amazon.com/cli/latest/userguide/install-bundle.html)
 
-### Docker Images
+### Docker Examples
 
 A few of the most popular images on DockerHub were a useful reference:
 

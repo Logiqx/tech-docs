@@ -127,6 +127,16 @@ I have made some notes on using the [AWS CLI](AWS.md) from inside Jenkins, optio
 
 
 
+## Running on AWS ECS
+
+Here's a couple of articles relating to the use of Jenkins on ECS:
+
+[Set up a build pipeline with Jenkins and Amazon ECS](https://aws.amazon.com/blogs/devops/set-up-a-build-pipeline-with-jenkins-and-amazon-ecs/) on AWS Blogs (Devops)
+
+[Let's talk best-practice Jenkins on AWS ECS](https://www.reddit.com/r/devops/comments/9rpfbq/lets_talk_bestpractice_jenkins_on_aws_ecs/?utm_source=amp&utm_medium=&utm_content=post_body) on Reddit (r/devops)
+
+
+
 ## Job Triggers
 
 ### Build Periodically
