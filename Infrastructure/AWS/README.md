@@ -1,4 +1,4 @@
-# AWS - WIP
+# Amazon Web Services (AWS)
 
 ## Background
 
@@ -28,7 +28,7 @@ Using the [Instance Scheduler](https://aws.amazon.com/solutions/instance-schedul
 
 ### Network Services
 
-#### NAT
+#### Network Address Translation (NAT)
 
 Private subnets require [Network Address Translation (NAT)](Nat.md) for internet access.
 
