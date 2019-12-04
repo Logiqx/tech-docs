@@ -119,6 +119,16 @@ git rev-parse --short=12 HEAD
 
 
 
+## Repository Maintenance
+
+### Shrinking a Repository
+
+It is sometimes desirable to delete files from the Git repository.
+
+This might be necessary if large files have been committed by accident or if a project needs to be split.
+
+I have made some notes on [shrinking a repository](Shrinking_Repository.md).
+
 
 
 #### Links

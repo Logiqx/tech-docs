@@ -4,7 +4,7 @@
 
 I have been using Git as my version control system since the start of 2016.
 
-I've started to make a few notes on [Git](Git.md) including details about how I migrated projects from CVS.
+I've started to make a few notes on [Git](Git/README.md) including details about how I migrated projects from CVS.
 
 
 
