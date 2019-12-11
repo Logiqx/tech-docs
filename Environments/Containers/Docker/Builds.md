@@ -1,5 +1,31 @@
 # Building Images
 
+## Checklist
+
+Here is a simple checklist for building quality images. Further detail is documented elsewhere in these documents.
+
+#### Multi-Stage
+
+Use multi-stage to keep build tools and other clutter out of the final image.
+
+#### BuildKit
+
+Use BuildKit for faster builds (especially multi-stage), better caching and some additional features.
+
+#### Non-Root User
+
+Create a dedicated user (and maybe a group) to the image and switch to it with the USER command.
+
+#### Init Process
+
+Use tini or dumb-init as the ENTRYPOINT to ensure to support gracefully shut down and avoid zombies.
+
+#### Tags
+
+Ensure that images have unique tags whether they be of the form X.Y.Z, YYYYMMDD or XXXXXXXXXXXX.
+
+
+
 ## General
 
 ### Multi-stage Builds
@@ -135,11 +161,37 @@ docker tag petition:$(git rev-parse --short=12 HEAD) petition:latest
 
 
 
-### Docker CMD vs ENTRYPOINT
+### Docker ENTRYPOINT vs CMD
 
-"set -ex" unnecessary in Dockerfile
+[Dockerfile: ENTRYPOINT vs CMD](https://www.ctl.io/developers/blog/post/dockerfile-entrypoint-vs-cmd/) is a nice article describing the differences.
 
-<https://www.ctl.io/developers/blog/post/dockerfile-entrypoint-vs-cmd/>
+TL;DR - ENTRYPOINT is always run and CMD can be overridden.
+
+
+
+## The PID 1 Problem
+
+It took me a little while of using Docker before I realised the benefits of a lightweight init process (e.g. "tini" or "dumb-init") in a Docker image.
+
+TL;DR - Use tini or dumb-init as the ENTRYPOINT to ensure that containers can be gracefully stopped and do not cause issues relating to zombies on the Docker host.
+
+[Docker and the PID 1 zombie reaping problem](https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/amp/) provides a very thorough description of the problem
+
+### Popular Solutions
+
+#### Tini
+
+[What is advantage of Tini?](https://github.com/krallin/tini/issues/8#issuecomment-146135930) is a through description by the author of why tini is required.
+
+#### --init
+
+[How to use --init parameter in docker run](https://stackoverflow.com/questions/43122080/how-to-use-init-parameter-in-docker-run) explains why --init is basically the same as running tini.
+
+#### dumb-init
+
+[Introducing dumb-init, an init system for Docker containers](https://engineeringblog.yelp.com/2016/01/dumb-init-an-init-for-docker.html) is a great article that describes the proplems that dumb-init (and tini) resolve.
+
+[How critical is dumb-init for Docker?](https://stackoverflow.com/questions/37374310/how-critical-is-dumb-init-for-docker) includes comments from the author of tini, impartially comparing dumb-init and tini.
 
 
 
