@@ -32,6 +32,28 @@ The Docker engine can be configured by tweaking `/etc/docker/daemon.json`.
 
 This is can also be done through in Settings -> GUI (Advanced) on Docker for Windows
 
+Here is my latest template for EC2 instances running Docker:
+
+```
+{
+    "builder": {
+        "gc": {
+            "enabled": true,
+            "policy": [
+                {"keepStorage": "512MB", "filter": {"unused-for": {"168h": true}}},
+                {"keepStorage": "2GB", "all": true}
+            ]
+        }
+    },
+    "features": {"buildkit": true},
+    "log-driver": "local",
+    "log-opts": {"max-size": "10m", "max-file": "3"},
+    "no-new-privileges": true
+}
+```
+
+
+
 ### BuildKit
 
 Enable BuildKit as follows:
@@ -104,8 +126,8 @@ You can specify the garbage collection policy in daemon.json:
         "gc": {
             "enabled": true,
             "policy": [
-                {"keepStorage": "512MB", "filter": ["unused-for=168h"]},
-                {"keepStorage": "30GB", "all": true}
+                {"keepStorage": "512MB", "filter": {"unused-for": {"168h": true}}},
+                {"keepStorage": "2GB", "all": true}
             ]
         }
     }
