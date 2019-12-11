@@ -115,8 +115,8 @@ You can specify the garbage collection policy in daemon.json:
         "gc": {
             "enabled": true,
             "policy": [
-                {"keepStorage": "512MB", "filter": ["unused-for=168h"]},
-                {"keepStorage": "30GB", "all": true}
+                {"keepStorage": "512MB", "filter": {"unused-for": {"168h": true}}},
+                {"keepStorage": "2GB", "all": true}
             ]
         }
     }
