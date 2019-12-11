@@ -9,6 +9,16 @@ https://en.m.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
 
 
 
+## Tips
+
+### set -ex
+
+Anyone who sees it for the first time might wonder why `set -ex` appears in scripts.
+
+[set -ex - The most useful bash trick of the year](https://www.peterbe.com/plog/set-ex)
+
+
+
 ## Security
 
 ### Hardening
