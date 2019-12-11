@@ -1,14 +1,36 @@
-# Security - TODO
+# Security - WIP
 
-### I need to sort this list of articles relating to Docker security
+### I need to sort through this list of articles!
+
+
+
+## Thoughts
+
+Image builds
+
+- Non-root user is important, especially for services
+- Do not use environment variables for secrets because they are visible in the image history
+- Do not include secrets in the images as they can easily be extracted, even if they're "deleted"
+  - TODO: GitHub - Hmmm
+
+Running Containers
+
+- Do not run privileged containers
+- Use --security-opt=no-new-privileges
+- Do not mount docker.sock
+  - TODO: I need an alternative approach for Jenkins - e.g. run ECS tasks
+
+Host Configuration
+
+- User namespaces are especially important on a shared host
+  - e.g. They avoid anyone mounting the root filesystem of the host
+- Container breakout is possible due to runC exploit prior to Docker 18.02
 
 
 
 #### BLAH
 
 Limit resources - CPU, Memory, Files (need to use Swarm) - <https://github.com/docker/compose/issues/4513>
-
-Use --security-opt=no-new-privileges
 
 Readonly file system? See OWASP cheat sheet
 
