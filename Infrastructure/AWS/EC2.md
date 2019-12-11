@@ -87,6 +87,12 @@ git config --global color.status.changed "yellow bold"
 
 Note: This was copied from the page describing [git](../../Development/Version_Control/Git.md).
 
+#### Install jq
+
+```sh
+sudo yum install jq
+```
+
 
 
 ### Install Services
@@ -125,5 +131,13 @@ If connecting to an EC2 instance in the private subnet via a Bastion host in the
 ssh -A ec2-user@....
 ```
 
+### Terminal Colours
 
+#### Git Colours
+
+```
+git config --global color.diff.old "cyan"
+git config --global color.status.untracked "cyan"
+git config --global color.status.changed "yellow bold"
+```
 
