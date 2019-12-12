@@ -2,27 +2,85 @@
 
 ## Checklist
 
-Here is a simple checklist for building quality images. Further detail is documented elsewhere in these documents.
+Here is my personal checklist for building high quality Docker images.
 
-#### Multi-Stage
+Further details about every topic can be found elsewhere in this document.
 
-Use multi-stage to keep build tools and other clutter out of the final image.
+### Image Size
+
+#### Multi-Stage Builds
+
+Use multi-stage to keep build tools and other clutter out of the final image, ensuring the final image is kept small.
+
+#### Chain RUN Commands
+
+Chain `RUN` commands using the `&&` syntax to reduce the number of layers and exclude ephemeral data / files from the final image.
+
+#### Package Managers
+
+Alpine: Use `apk add --no-cache` which is the simple alternative to`apk update && apk add <packages>` followed by `rm -fr /var/cache/apk/*`. Both approaches remove the APK cache from the image.
+
+Debian / Ubuntu: Use `apt-get update && apt-get install -y --no-install-recommends <packages>` followed by `rm -rf /var/lib/apt/lists/*`.
+
+Python: Use `pip install --no-cache-dir <packages>`.
+
+
+
+### Image Management
+
+#### Tags
+
+Ensure that images have unique tags whether they be of the form `X.Y.Z`, `YYYYMMDD` or `XXXXXXXXXXXX`.
+
+Failure to use unique tags leads to old images being listed as `<none>` when they are superseded.
+
+#### Environment Variables
+
+The `ENV` directive can is an effective way to pass important parameters into containers when they are started up.
+
+#### Volumes
+
+Use volumes for folders that need to be persistent or shared with other containers. Ideally the container should be runnable as "read-only" meaning that no data is written to the container's own layer.
+
+#### Work Directory
+
+Specifying `WORKDIR` is helpful as it will put the user into the appropriate directory by default.
 
 #### BuildKit
 
 Use BuildKit for faster builds (especially multi-stage), better caching and some additional features.
 
+
+
+### Container Security
+
 #### Non-Root User
 
-Create a dedicated user (and maybe a group) to the image and switch to it with the USER command.
+Create a dedicated user (and maybe a group) to the image and switch to it with the `USER` command.
+
+Be sure to `chown` and `chmod` the contents of the home directory. Also note that the default permissions may be inconsistent between Debian / Ubuntu and Alpine.
+
+
+
+### Container Reliability
+
+#### Specify Version
+
+Be sure to specify version numbers to avoid breaking changes in the future.
+
+Debian / Ubuntu: `apt-get install -y --no-install-recommends tini=0.18.*`
+
+Alpine: `apk add --no-cache tini=~0.18`
+
+Python: `pip install --no-cache-dir beautifulsoup4==4.8.*`
 
 #### Init Process
 
-Use tini or dumb-init as the ENTRYPOINT to ensure to support gracefully shut down and avoid zombies.
+Use *tini* or *dumb-init* as the `ENTRYPOINT` to ensure containers can be gracefully shut down and avoid zombies which can exhaust PIDs and other resources on the host.
 
-#### Tags
+#### Health Check
 
-Ensure that images have unique tags whether they be of the form X.Y.Z, YYYYMMDD or XXXXXXXXXXXX.
+Incorporate a simple health check to ensure that services running in containers can be reliably monitored.
 
 
 
@@ -30,7 +88,7 @@ Ensure that images have unique tags whether they be of the form X.Y.Z, YYYYMMDD 
 
 ### Multi-stage Builds
 
-Using a [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/) to convert a Notebook to a simple Python script is advantageous.
+Using a [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/) to convert a Notebook to a simple Python script is highly advantageous.
 
 I've used this approach in a number of my projects on GitHub:
 
