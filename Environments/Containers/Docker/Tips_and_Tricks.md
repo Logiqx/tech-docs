@@ -79,7 +79,7 @@ Spin up another container containing the network debugging tools, connected to t
 Identify what has been added / changed / deleted in each layer:
 
 ````sh
-docker image build --no-cache -rm=false .
+docker image build --no-cache --rm=false .
 docker container diff [container]
 ````
 
