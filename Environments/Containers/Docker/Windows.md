@@ -51,13 +51,17 @@ The hard disks for the legacy VM can be found in `C:\%USERNAME%\Public\Documents
 
 
 
-### Bind Mounts - Superseded
+### Bind Mounts
+
+When developing on Windows with WSL 2 then be sure that the bind mounts are within the Linux file system and not on the Windows partition. Bind mounts are much faster for files under /home then /mnt/c and this is especially noticeable for "git" operations.
+
+
+
+#### Legacy Setup
 
 These were a little tricky to get working on Windows since the WSL2 implementation uses bind mounts within Linux.
 
-The section below provides some basic pointers as to what was required in the way of setup on my Windows machine.
-
-#### Setup
+The sections below provides some basic pointers as to what was required in the way of setup on my Windows machine.
 
 ##### Windows User
 
