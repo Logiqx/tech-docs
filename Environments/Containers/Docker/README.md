@@ -141,6 +141,13 @@ $ docker stack deploy -c <(docker-compose config) STACK_NAME
 
 Useful for things like MySQL and MariaDB databases.
 
+Backing up volumes is a relatively simple process so long as they are not being written to during the backup:
+
+- [Docker Backup: Saving and Restoring Your Volumes](https://blog.ssdnodes.com/blog/docker-backup-volumes/) - Blog post
+- [Backup, restore, or migrate data volumes](https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes) - Docker docs
+
+
+
 ### Bind Mounts
 
 Useful for files that need to be accessible on host machine during development.
