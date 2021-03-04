@@ -158,3 +158,34 @@ Brandon has created a script to fix these issues when the container starts up.
 Check the slide decks on GitHub!
 
 
+
+#### Copying WSL 2 Distros
+
+Since project files should be stored in the Linux distro you may need to copy files between different WSL distros.
+
+This can easily be achieved when Docker Desktop is running because it creates some useful bind mounts.
+
+From your target distro run the following command to check for /mnt/wsl:
+
+```
+mount | grep "mnt/wsl"
+```
+
+Create a folder to be mounted and then bind mount it into /mnt/wsl:
+
+```
+mkdir ~/testmount
+mkdir /mnt/wsl/testmount
+sudo mount -o bind ~/testmount /mnt/wsl/testmount
+```
+
+The source distro can then copy files into the mount:
+
+```
+cp -rp ~/project /mnt/wsl/testmount
+```
+
+Once you are done you can dispose of "testmount" in /mnt/wsl.
+
+Note: This trick was mentioned in a Bret Fisher live show - starts at 1h40m in this [video](https://youtu.be/I49MFhkVa3o?t=6023).
+
