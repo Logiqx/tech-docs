@@ -10,33 +10,69 @@
 
 ## Ubuntu
 
-I started off using the Ubuntu distribution from the Microsoft Store.
+I started off using the Ubuntu distribution from the Microsoft Store but switched to WLinux/PengWin for the inbuilt Docker bridge.
 
-Upgraded using the following commands:
+Thorough system upgrades can be achieved using the following commands:
 
 ```sh
 sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y'
 ```
 
+Note: Docker Desktop Community 2.3.0.2 added integrated support for WSL2 so I switched back from using Pengwin to Ubuntu.
+
 
 
 ## Pengwin
 
-In March 2019, I switched to the WLinux distribution from the Microsoft Store.
+In March 2019, I started using the Pengwin distribution (formerly known as WLinux) from the [Microsoft Store](https://www.microsoft.com/en-gb/p/wlinux/9nv1gv1pxz6p).
 
-The most appealing feature of WLinux is the inbuilt Docker bridge, integrating with Docker for Windows.
+The most appealing feature of WLinux was the inbuilt Docker bridge, integrating with Docker for Windows.
 
-On my machine WLinux renamed itself to Pengwin on 11 April 2019.
+System updates can be performed as follows, rather than using "apt-get" directly:
 
-Microsoft Store - [WLinux / Pengwin](https://www.microsoft.com/en-gb/p/wlinux/9nv1gv1pxz6p)
+```
+pengwin-setup update
+pengwin-setup upgrade
+```
 
-
+Since Docker added integrated support for WSL2 all of the other Linux distros have the equivalent feature.
 
 Notes:
 
-Run later - fcitx-config-gtk3
+- On my machine WLinux renamed itself to Pengwin on 11 April 2019.
+- The initial setup / configuration can be re-run via the "pengwin-setup" command, formerly "wlinux-setup".
+- I never got around to running "fcitx-config-gtk3".
 
-Run again - wlinux-setup
+
+
+## Configuration
+
+WSL was cool but WSL2 is vastly superior. There are however a couple of pitfalls relating to **memory** and **disk usage**.
+
+### Memory
+
+When I switched to WSL2 my Windows version was 2004, build 19041.
+
+The default memory assigned to the WSL2 Linux VM was changed to [80% of the host memory](https://docs.microsoft.com/en-us/windows/wsl/release-notes#build-19028) in build 19028.
+
+This is something of an issue on my 16GB machine because WSL2 assigned 13GB to the Linux VM and [Linux eats RAM](https://www.linuxatemyram.com/).
+
+I originally found a solution in the [comments](https://github.com/microsoft/WSL/issues/4166#issuecomment-526725261) of a GitHub issue. The fix is to limit the WSL2 memory using [.wslconfig](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig):
+
+```
+[wsl2]
+memory=8GB
+```
+
+You can check that the limit has been implemented using the command `free -h`. It will show roughly the same figures from all of your WSL2 Linux distros.
+
+It should be noted that the default has subsequently been changed in Windows build 20175:
+
+- "[Adjust default memory assignment of WSL2 VM to be 50% of host memory or 8GB, whichever is less](https://docs.microsoft.com/en-us/windows/wsl/release-notes#build-20175)"
+
+Note that it references the GitHub issue 4166 where I found the above fix.
+
+If you want to clear the page cache then have a look at the [Linux](../../Operating_Systems/Linux/README.md) notes.
 
 
 
