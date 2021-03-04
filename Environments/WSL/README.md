@@ -2,13 +2,18 @@
 
 ## Background
 
-[Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about)
+Here are a couple of links to get started:
 
-[Windows 10 WSL vs. Linux Performance For Early 2018](https://www.phoronix.com/scan.php?page=article&item=wsl-february-2018&num=1)
+- [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about)
+- [Windows 10 WSL vs. Linux Performance For Early 2018](https://www.phoronix.com/scan.php?page=article&item=wsl-february-2018&num=1)
+
+I used WSL initially but subsequently switched to WSL2 due to the integrated support in Docker.
 
 
 
-## Ubuntu
+## Linux Distros
+
+### Ubuntu
 
 I started off using the Ubuntu distribution from the Microsoft Store but switched to WLinux/PengWin for the inbuilt Docker bridge.
 
@@ -22,7 +27,7 @@ Note: Docker Desktop Community 2.3.0.2 added integrated support for WSL2 so I sw
 
 
 
-## Pengwin
+### Pengwin
 
 In March 2019, I started using the Pengwin distribution (formerly known as WLinux) from the [Microsoft Store](https://www.microsoft.com/en-gb/p/wlinux/9nv1gv1pxz6p).
 
@@ -45,7 +50,47 @@ Notes:
 
 
 
-## Configuration
+## WSL Monitoring
+
+### Distros
+
+The installed Linux distros and their run state can be viewed using the command `wsl --list -v`.
+
+Individual distros can be terminated using `wsl --terminate [distro name]`.
+
+All distros and the shared VM can be shutdown using `wsl --shutdown`.
+
+### Virtual Machine
+
+The virtual machine being used for WSL2 can be seen via the command `hcsdiag list`.
+
+To run this command you must be an administrator or in the "Hyper-V Administrators" group. If you add your user to the "Hyper-V Administrators" group (e.g. via Computer Management) you will need to logout and login for it to become effective.
+
+Whilst it is possible to kill the VM using `hcsdiag kill`, I prefer to use `wsl --shutdown` which feels cleaner.
+
+Note: Shutting down WSL2 (including the VM) is essential, prior to using commands such as `diskpart` or you risk corrupting disk images.
+
+### Docker Integration
+
+PengWin (formerly WLinux) continues to use a socat process:
+
+```
+socat UNIX-LISTEN:/var/run/docker.sock,fork,group=docker,umask=007 EXEC:\'/mnt/c/Users/Mike/.npiperelay/npiperelay.exe\' -ep -s //./pipe/docker_engine,nofork
+```
+
+Ubuntu uses features built into Docker Desktop:
+
+```
+docker serve --address unix:///home/mike/.docker/run/docker-cli-api.sock
+
+/mnt/wsl/docker-desktop/docker-desktop-proxy --distro-name Ubuntu --docker-desktop-root /mnt/wsl/docker-desktop --use-cloud-cli=true
+```
+
+
+
+
+
+## WSL Configuration
 
 WSL was cool but WSL2 is vastly superior. There are however a couple of pitfalls relating to **memory** and **disk usage**.
 
@@ -76,7 +121,48 @@ If you want to clear the page cache then have a look at the [Linux](../../Operat
 
 
 
-## Tools
+### Disk Space
+
+Potentially need to be careful about disk space of the virtual hard disks:
+
+- copying large folders
+- creating large zips / backups
+
+The expanding vhdx files do not automatically shrink, although I believe that empty space is re-used. This will potentially fill up the host disk and potentially affect future backup sizes if the vhdx files are being directly backed up.
+
+A convenient way to locate the vhdx files is using via a Linux prompt, although similar can be done with a Windows search:
+
+```
+cd /mnt/c/Users/Mike/AppData/Local/
+find . -name '*.vhdx' 2>/dev/null
+```
+
+The file sizes can then be determined as follows:
+
+```
+cd /mnt/c/Users/Mike/AppData/Local/
+du -sh Packages/*/LocalState/*.vhdx Docker/wsl/*/*.vhdx | sort -rh
+```
+
+When using Windows 10 home, vhdx files can be shrunk using a procedure described in a [comment](https://github.com/microsoft/WSL/issues/4699#issuecomment-627133168) of a GitHub issue:
+
+1. Quit Docker Desktop via the Windows GUI.
+2. Terminate the WSL2 distros and shutdown the VM using ```wsl --shutdown```.
+3. Compact the virtual hard disk using the [diskpart](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/diskpart) command, being sure to use a fully qualified path name.
+
+```
+select vdisk file="C:\Users\Mike\AppData\Local\Packages\WhitewaterFoundryLtd.Co.16571368D6CFF_kd1vv0z0vy70w\LocalState\ext4.vhdx"
+attach vdisk readonly
+compact vdisk
+detach vdisk
+exit
+```
+
+Note: Should it be necessary to expand the maximum size beyond 256GB then it is a simple [procedure](https://docs.microsoft.com/en-us/windows/wsl/compare-versions#understanding-wsl-2-uses-a-vhd-and-what-to-do-if-you-reach-its-max-size) involving the diskpart command and some Linux commands.
+
+
+
+## Linux Tools
 
 ### APT
 
