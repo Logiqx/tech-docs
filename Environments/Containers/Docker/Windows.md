@@ -52,9 +52,11 @@ This is done through Settings -> GUI (Advanced) on Docker for Windows.
 
 ## Linux Containers on Windows
 
-Linux Containers on Windows (LCOW) is an experimental feature in Docker for Windows.
+Linux Containers on Windows (LCOW) has been an experimental feature in Docker for Windows.
 
-Until some of the issues with it have been fixed, I will continue to run traditional Linux containers.
+However, I ran into some issues such as inability to stop Linux containers so I stuck to traditional Linux containers.
+
+Since Docker for Windows (2.2.0.0 / 2.3.0.2) has integration with WSL2, I no longer have a specific use for LCOW.
 
 I've made some notes on my experiences with [LCOW](LCOW.md).
 
