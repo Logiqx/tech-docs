@@ -2,7 +2,9 @@
 
 Docker requires Hyper-V enabled whilst VirtualBox requires Hyper-V disabled.
 
-Create suitable boot configurations before starting with Docker!
+In the past, I created multiple boot configurations so that I could switch between VirtualBox and Docker.
+
+Nowadays, I just run with Hyper-V enabled and rarely use VirtualBox.
 
 
 
