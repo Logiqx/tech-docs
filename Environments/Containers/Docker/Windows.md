@@ -2,43 +2,13 @@
 
 ## Docker Desktop
 
-### Boot Configuration
+### Boot Configuration - Rarely Required
 
 To switch between Docker and VirtualBox on Windows it is necessary to enable / disable Hyper-V.
 
 I've made some notes on how to create suitable [boot configurations](../../Boot.md).
 
-
-
-### Removing Legacy VM and LCOW
-
-The hard disks for the legacy VM can be found in `C:\%USERNAME%\Public\Documents\Hyper-V\Virtual hard disks`.
-
-I removed the legacy VM and the virtual hard disk via the Docker GUI; Troubleshoot -> Clean / Purge Data -> Hyper-V.
-
-I removed my old LCOW experiments via the Docker GUI; Troubleshoot -> Clean / Purge Data -> Windows Containers.
-
-
-
-### Bind Mounts
-
-These can be a little tricky to get working on Windows.
-
-The section below provides some basic pointers as to what is required in the way of setup.
-
-#### Setup
-
-##### Docker For Windows
-
-Settings -> Shared Drives -> C
-
-##### Share C: Drive
-
-Right-click C: -> Properties -> Sharing -> Share...
-
-##### Anti-Virus Exclusion
-
-Norton -> Settings -> Firewall -> Configure Public Network Exceptions -> File and Printer Sharing
+Nowadays, I just run with Hyper-V enabled and rarely use VirtualBox.
 
 
 
@@ -47,6 +17,63 @@ Norton -> Settings -> Firewall -> Configure Public Network Exceptions -> File an
 The Docker engine can be configured on Linux by tweaking `/etc/docker/docker.json`.
 
 This is done through Settings -> GUI (Advanced) on Docker for Windows.
+
+
+
+### WSL 2 Configuration
+
+#### Memory
+
+When I switched to WSL 2 my Windows version was 2004, build 19041.
+
+The default memory assigned to the WSL 2 Linux VM was changed to [80% of the host memory](https://docs.microsoft.com/en-us/windows/wsl/release-notes#build-19028) in build 19028.
+
+This is something of an issue on my 16GB machine because WSL 2 assigned 13GB to the Linux VM and [Linux eats RAM](https://www.linuxatemyram.com/).
+
+A solution to this issue can be found in my WSL [notes](../../WSL/README.md) in the WSL configuration section.
+
+
+
+#### Disk Space
+
+Details about the virtual hard disks can be found in my WSL [notes](../../WSL/README.md) in the WSL configuration section.
+
+
+
+### Removing Legacy VM and LCOW after switch to WSL2
+
+Since Docker Desktop 2.2.0.0 / 2.3.0.2 the WSL2 integration is preferable to the traditional VM or LCOW.
+
+The hard disks for the legacy VM can be found in `C:\%USERNAME%\Public\Documents\Hyper-V\Virtual hard disks`.
+
+- I removed the legacy VM and the virtual hard disk via the Docker GUI; Troubleshoot -> Clean / Purge Data -> Hyper-V.
+- I removed my old LCOW experiments via the Docker GUI; Troubleshoot -> Clean / Purge Data -> Windows Containers.
+
+
+
+### Bind Mounts - Superseded
+
+These were a little tricky to get working on Windows since the WSL2 implementation uses bind mounts within Linux.
+
+The section below provides some basic pointers as to what was required in the way of setup on my Windows machine.
+
+#### Setup
+
+##### Windows User
+
+Create a Windows user called "Docker".
+
+##### Share C: Drive
+
+Right-click C: -> Properties -> Sharing -> Share... and give full access to the "Docker" user.
+
+##### Docker For Windows
+
+Settings -> Shared Drives -> C, providing the Docker username and password
+
+##### Anti-Virus Exclusion
+
+Norton -> Settings -> Firewall -> Configure Public Network Exceptions -> File and Printer Sharing
 
 
 
