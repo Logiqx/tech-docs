@@ -76,6 +76,24 @@ git config --global color.status.changed "yellow bold"
 
 
 
+#### White Space
+
+It may be preferable to filter / ignore minor changes sometimes, such as changes to line feeds:
+
+```
+git -c core.fileMode=false -c core.safecrlf=false status
+git -c core.fileMode=false -c core.safecrlf=false diff
+```
+
+To filter / ignore changes to file permissions you can do something similar:
+
+```
+git -c core.fileMode=false status
+git -c core.fileMode=false diff
+```
+
+
+
 #### Troubleshooting
 
 If you still get prompted for the username then Git might be using https instead of ssh.
