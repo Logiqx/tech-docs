@@ -10,6 +10,16 @@ I've made some notes on how to create suitable [boot configurations](../../Boot.
 
 
 
+### Removing Legacy VM and LCOW
+
+The hard disks for the legacy VM can be found in `C:\%USERNAME%\Public\Documents\Hyper-V\Virtual hard disks`.
+
+I removed the legacy VM and the virtual hard disk via the Docker GUI; Troubleshoot -> Clean / Purge Data -> Hyper-V.
+
+I removed my old LCOW experiments via the Docker GUI; Troubleshoot -> Clean / Purge Data -> Windows Containers.
+
+
+
 ### Bind Mounts
 
 These can be a little tricky to get working on Windows.
