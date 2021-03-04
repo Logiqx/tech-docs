@@ -18,6 +18,10 @@ Reboots are somewhat inconvenient so I've stopped using VirtualBox on a regular 
 
 Lightweight Hyper-V machines are also intrinsic to WSL2 and Docker for Windows so nowadays, I usually have Hyper-V enabled.
 
+The virtual hard disks for VMs can be found in `C:\%USERNAME%\Public\Documents\Hyper-V\Virtual hard disks`
+
+I removed the legacy Docker VM and the virtual hard disk via the Docker GUI; Troubleshoot -> Clean / Purge Data -> Hyper-V.
+
 
 
 ## Vagrant
