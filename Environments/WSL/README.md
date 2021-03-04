@@ -11,6 +11,14 @@ I used WSL initially but subsequently switched to WSL 2 due to the integrated su
 
 
 
+## Tips
+
+### Useful Commands
+
+You can quickly open Windows Explorer from any Linux folder using `explorer.exe .` (do not forget the dot).
+
+
+
 ## Linux Distros
 
 ### Ubuntu
@@ -23,7 +31,9 @@ Thorough system upgrades can be achieved using the following commands:
 sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y'
 ```
 
-Note: Docker Desktop Community 2.3.0.2 added integrated support for WSL 2 so I switched back from using Pengwin to Ubuntu.
+Docker Desktop Community 2.3.0.2 added integrated support for WSL 2 in Windows Home so I switched back to Ubuntu for my project work.
+
+Another benefit is that the Docker client in Ubuntu is automatically upgraded by Docker Desktop, unlike the one in Pengwin.
 
 
 
@@ -40,11 +50,13 @@ pengwin-setup update
 pengwin-setup upgrade
 ```
 
-Since Docker added integrated support for WSL 2 all of the other Linux distros have the equivalent feature.
+I had problems with Docker 3.1 + Pengwin + Windows Terminal which are described in my Docker for [Windows](../Containers/Docker/Windows.md) document. I also found that it was impossible to auto-start MariaDB via Docker Compose and I had a suspicion that it was related to the Pengwin integration.
+
+Since Docker added integrated support for WSL 2 all of the other Linux distros have the equivalent feature so I have switched back to Ubunutu. The above problems were a couple of reasons for switching back to Ubuntu.
 
 Notes:
 
-- On my machine WLinux renamed itself to Pengwin on 11 April 2019.
+- On my personal laptop WLinux renamed itself to Pengwin on 11 April 2019.
 - The initial setup / configuration can be re-run via the "pengwin-setup" command, formerly "wlinux-setup".
 - I never got around to running "fcitx-config-gtk3".
 
@@ -86,7 +98,7 @@ docker serve --address unix:///home/mike/.docker/run/docker-cli-api.sock
 /mnt/wsl/docker-desktop/docker-desktop-proxy --distro-name Ubuntu --docker-desktop-root /mnt/wsl/docker-desktop --use-cloud-cli=true
 ```
 
-
+I've already mentioned that I had problems with Docker 3.1 + Pengwin + Windows Terminal and I suspect it is something to do with the implementation of bind mounts. This was potentially responsible for my trouble in starting MariaDB using Docker Compose. The socket integration is clearly quite different (see above) and bind mounts may differ as well, so I decided to go with a mainstream Linux release.
 
 
 
