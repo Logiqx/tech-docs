@@ -55,7 +55,7 @@ The hard disks for the legacy VM can be found in `C:\%USERNAME%\Public\Documents
 
 When developing on Windows with WSL 2 then be sure that the bind mounts are within the Linux file system and not on the Windows partition. Bind mounts are much faster for files under /home then /mnt/c and this is especially noticeable for "git" operations.
 
-
+You can also use bind mounts on Linux itself to facilitate copying of files between Linux distros as described in [tips and tricks](Tips_and_Tricks.md).
 
 #### Legacy Setup
 
@@ -78,6 +78,54 @@ Settings -> Shared Drives -> C, providing the Docker username and password
 ##### Anti-Virus Exclusion
 
 Norton -> Settings -> Firewall -> Configure Public Network Exceptions -> File and Printer Sharing
+
+
+
+## Troubleshooting
+
+### Upgrade Issue
+
+I switched to WSL 2 with Docker 2.3.0.4 and after getting all of my images + containers + volumes migrated, I attempted an upgrade to 3.1.0. After the upgrade the Docker engine failed to start after 20 minutes so I shut down and went back to it the next day. The following morning the Docker engine failed to start and quickly returned an error message.
+
+After taking backups of everything (e.g. vhdx files for Docker and WSL 2), I stumbled across a thread that suggested deleting the files in `\\wsl$\docker-desktop-data\isocache` and this actually fixed my issue. I found that there was just enough time after attempting to start Docker to get into the folder and delete the files. Docker re-created the isocache files and then fixed itself.
+
+Quick summary:
+
+- Upgraded from 2.3.0.4 to 3.1.0
+- After the install it took ages trying to re-start Docker (circa 20 mins) and it was late at night so I did a Windows shutdown
+- Docker wouldn't start the next day with an error similar to GitHub issue [8748](https://github.com/docker/for-win/issues/8748)
+- wsl --list -v showed docker-desktop disappearing when trying to start Docker
+- Eventually, I realised that I could go to \\wsl$\docker-desktop-data\isocache and delete files as Docker was trying to start
+- The files were re-populated in the cache and the docker engine shut down cleanly
+- I was then able to start Docker and from that point onwards was working fine!
+
+Threads on GitHub:
+
+- [Docker fails on startup on Win-10 after the update #8748](https://github.com/docker/for-win/issues/8748)
+
+- [Update from 2.5.0.0 to 2.5.0.1 fails. Docker won't start now. #9504](https://github.com/docker/for-win/issues/9504)
+
+I added some brief comments to say what worked for me in case they are helpful to others.
+
+
+
+### Pengwin + Windows Terminal
+
+I discovered that running Docker containers from Windows Terminal did not work the same as from a Pengwin window.
+
+When I tried to start any container utilising bind mounts, I got the following error:
+
+```
+docker: Error response from daemon: invalid mount config for type "bind": bind source path does not exist:
+```
+
+For standalone containers this was pretty evident but with my Docker Compose script that started a MariaDB container it caused some very strange symptoms and the database was failing to start.
+
+Initially I avoided Windows Terminal and stuck to a Pengwin window but I've subsequently migrated my projects to Ubuntu.
+
+Further investigation has shown that so long as WLinux is started when Docker integration is enabled it may work ok?
+
+To potentially fix Pengwin + Docker integration run the command `wsl --terminate WLinux` and let Docker re-start the WLinux distro.
 
 
 
