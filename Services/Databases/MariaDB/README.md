@@ -350,6 +350,44 @@ Reference:
 
 
 
+### Troubleshooting
+
+Once in while a transaction might be aborted and leave a table in a broken state.
+
+This will sometimes be apparent when looking at the Docker log and cannot be fixed by simply dropping the table.
+
+```
+2021-03-02 11:54:21 0 [ERROR] InnoDB: Operating system error number 2 in a file operation.
+2021-03-02 11:54:21 0 [ERROR] InnoDB: The error means the system cannot find the path specified.
+2021-03-02 11:54:21 0 [ERROR] InnoDB: If you are installing InnoDB, remember that you must create directories yourself, InnoDB does not create them.
+2021-03-02 11:54:21 0 [ERROR] InnoDB: Cannot open datafile for read-only: './wca/users_20190507.ibd' OS error: 71
+2021-03-02 11:54:21 0 [ERROR] InnoDB: Operating system error number 2 in a file operation.
+2021-03-02 11:54:21 0 [ERROR] InnoDB: The error means the system cannot find the path specified.
+2021-03-02 11:54:21 0 [ERROR] InnoDB: If you are installing InnoDB, remember that you must create directories yourself, InnoDB does not create them.
+2021-03-02 11:54:21 0 [ERROR] InnoDB: Could not find a valid tablespace file for wca`.`users_20190507. Please refer to https://mariadb.com/kb/en/innodb-data-dictionary-troubleshooting/ for how to resolve the issue.
+```
+
+Under such circumstances you can check the information schema for the presence table:
+
+```
+SELECT * FROM INFORMATION_SCHEMA.INNODB_SYS_TABLES WHERE NAME LIKE '%users_20190507%';
+```
+
+You can "fix" the table such that it can be dropped by ensuring there is a suitable ".ibd" file to match the ".frm".
+
+```
+docker run -it --rm -v wca_mariadb:/var/lib/mysql ubuntu:bionic bash
+cd /var/lib/mysql
+cp -p wca_dev/users.ibd wca/users_20190507.ibd
+cp -p wca_dev/users.frm wca/users_20190507.frm
+```
+
+Note: You could use `docker exec -it wca_mariadb_1 bash` instead of "docker run" but a new container is a good habit.
+
+Once the ".ibd" and ".frm" are present you can restart MariaDB then drop the table via SQL.
+
+
+
 ### Blogs on Tuning
 
 Here are a number of articles that discuss the main parameters that I tweak in MariaDB:
