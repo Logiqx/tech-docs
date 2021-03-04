@@ -16,7 +16,7 @@ To switch between Docker and VirtualBox it is necessary to [enable / disable](..
 
 Reboots are somewhat inconvenient so I've stopped using VirtualBox on a regular basis and tend to use Hyper-V.
 
-Lightweight Hyper-V machines are also intrinsic to WSL2 and Docker for Windows so nowadays, I usually have Hyper-V enabled.
+Lightweight Hyper-V machines are also intrinsic to WSL 2 and Docker for Windows so nowadays, I usually have Hyper-V enabled.
 
 The virtual hard disks for VMs can be found in `C:\%USERNAME%\Public\Documents\Hyper-V\Virtual hard disks`.
 

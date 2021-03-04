@@ -7,7 +7,7 @@ Here are a couple of links to get started:
 - [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about)
 - [Windows 10 WSL vs. Linux Performance For Early 2018](https://www.phoronix.com/scan.php?page=article&item=wsl-february-2018&num=1)
 
-I used WSL initially but subsequently switched to WSL2 due to the integrated support in Docker.
+I used WSL initially but subsequently switched to WSL 2 due to the integrated support in Docker.
 
 
 
@@ -23,7 +23,7 @@ Thorough system upgrades can be achieved using the following commands:
 sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y'
 ```
 
-Note: Docker Desktop Community 2.3.0.2 added integrated support for WSL2 so I switched back from using Pengwin to Ubuntu.
+Note: Docker Desktop Community 2.3.0.2 added integrated support for WSL 2 so I switched back from using Pengwin to Ubuntu.
 
 
 
@@ -40,7 +40,7 @@ pengwin-setup update
 pengwin-setup upgrade
 ```
 
-Since Docker added integrated support for WSL2 all of the other Linux distros have the equivalent feature.
+Since Docker added integrated support for WSL 2 all of the other Linux distros have the equivalent feature.
 
 Notes:
 
@@ -62,13 +62,13 @@ All distros and the shared VM can be shutdown using `wsl --shutdown`.
 
 ### Virtual Machine
 
-The virtual machine being used for WSL2 can be seen via the command `hcsdiag list`.
+The virtual machine being used for WSL 2 can be seen via the command `hcsdiag list`.
 
 To run this command you must be an administrator or in the "Hyper-V Administrators" group. If you add your user to the "Hyper-V Administrators" group (e.g. via Computer Management) you will need to logout and login for it to become effective.
 
 Whilst it is possible to kill the VM using `hcsdiag kill`, I prefer to use `wsl --shutdown` which feels cleaner.
 
-Note: Shutting down WSL2 (including the VM) is essential, prior to using commands such as `diskpart` or you risk corrupting disk images.
+Note: Shutting down WSL 2 (including the VM) is essential, prior to using commands such as `diskpart` or you risk corrupting disk images.
 
 ### Docker Integration
 
@@ -92,28 +92,28 @@ docker serve --address unix:///home/mike/.docker/run/docker-cli-api.sock
 
 ## WSL Configuration
 
-WSL was cool but WSL2 is vastly superior. There are however a couple of pitfalls relating to **memory** and **disk usage**.
+WSL was cool but WSL 2 is vastly superior. There are however a couple of pitfalls relating to **memory** and **disk usage**.
 
 ### Memory
 
-When I switched to WSL2 my Windows version was 2004, build 19041.
+When I switched to WSL 2 my Windows version was 2004, build 19041.
 
-The default memory assigned to the WSL2 Linux VM was changed to [80% of the host memory](https://docs.microsoft.com/en-us/windows/wsl/release-notes#build-19028) in build 19028.
+The default memory assigned to the WSL 2 Linux VM was changed to [80% of the host memory](https://docs.microsoft.com/en-us/windows/wsl/release-notes#build-19028) in build 19028.
 
-This is something of an issue on my 16GB machine because WSL2 assigned 13GB to the Linux VM and [Linux eats RAM](https://www.linuxatemyram.com/).
+This is something of an issue on my 16GB machine because WSL 2 assigned 13GB to the Linux VM and [Linux eats RAM](https://www.linuxatemyram.com/).
 
-I originally found a solution in the [comments](https://github.com/microsoft/WSL/issues/4166#issuecomment-526725261) of a GitHub issue. The fix is to limit the WSL2 memory using [.wslconfig](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig):
+I originally found a solution in the [comments](https://github.com/microsoft/WSL/issues/4166#issuecomment-526725261) of a GitHub issue. The fix is to limit the WSL 2 memory using [.wslconfig](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig):
 
 ```
-[wsl2]
+[WSL 2]
 memory=8GB
 ```
 
-You can check that the limit has been implemented using the command `free -h`. It will show roughly the same figures from all of your WSL2 Linux distros.
+You can check that the limit has been implemented using the command `free -h`. It will show roughly the same figures from all of your WSL 2 Linux distros.
 
 It should be noted that the default has subsequently been changed in Windows build 20175:
 
-- "[Adjust default memory assignment of WSL2 VM to be 50% of host memory or 8GB, whichever is less](https://docs.microsoft.com/en-us/windows/wsl/release-notes#build-20175)"
+- "[Adjust default memory assignment of WSL 2 VM to be 50% of host memory or 8GB, whichever is less](https://docs.microsoft.com/en-us/windows/wsl/release-notes#build-20175)"
 
 Note that it references the GitHub issue 4166 where I found the above fix.
 
@@ -147,7 +147,7 @@ du -sh Packages/*/LocalState/*.vhdx Docker/wsl/*/*.vhdx | sort -rh
 When using Windows 10 home, vhdx files can be shrunk using a procedure described in a [comment](https://github.com/microsoft/WSL/issues/4699#issuecomment-627133168) of a GitHub issue:
 
 1. Quit Docker Desktop via the Windows GUI.
-2. Terminate the WSL2 distros and shutdown the VM using ```wsl --shutdown```.
+2. Terminate the WSL 2 distros and shutdown the VM using ```wsl --shutdown```.
 3. Compact the virtual hard disk using the [diskpart](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/diskpart) command, being sure to use a fully qualified path name.
 
 ```
