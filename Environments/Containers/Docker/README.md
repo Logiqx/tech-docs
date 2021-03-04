@@ -152,6 +152,8 @@ Backing up volumes is a relatively simple process so long as they are not being 
 
 Useful for files that need to be accessible on host machine during development.
 
+If you are developing on Windows with WSL 2 then be sure that the bind mounts are within the Linux file system and not on the Windows partition. Bind mounts are much faster for files under /home then /mnt/c and this is especially noticeable for "git" operations.
+
 ### Reference
 
 [Manage data in Docker](https://docs.docker.com/storage/) - Choose the right type of mount for containers to store files in the host machine
