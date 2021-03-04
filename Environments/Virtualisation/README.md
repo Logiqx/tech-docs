@@ -6,13 +6,17 @@ I've used VirtualBox since about 2010, primarily for the development of server a
 
 I've started to make a few notes on [VirtualBox](VirtualBox.md).
 
+Nowadays, I rarely use VirtualBox and all of my server applications are running in Docker.
+
 
 
 ## Hyper-V
 
-To switch between Docker and VirtualBox it is necessary to enable / disable Hyper-V.
+To switch between Docker and VirtualBox it is necessary to [enable / disable](../Boot.md) Hyper-V.
 
-Reboots are somewhat inconvenient so I am likely to switch from VirtualBox to Hyper-V in the future.
+Reboots are somewhat inconvenient so I've stopped using VirtualBox on a regular basis and tend to use Hyper-V.
+
+Lightweight Hyper-V machines are also intrinsic to WSL2 and Docker for Windows so nowadays, I usually have Hyper-V enabled.
 
 
 
