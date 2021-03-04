@@ -9,6 +9,22 @@ https://en.m.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
 
 
 
+### Cache
+
+If you want to flush the file system cache(s) then have a look at this blog post:
+
+https://www.tecmint.com/clear-ram-memory-cache-buffer-and-swap-space-on-linux/
+
+This command needs to be run as root and is "safe"as it only clears the PageCache (not dentries and inodes):
+
+```
+sync; echo 1 > /proc/sys/vm/drop_caches
+```
+
+
+
+
+
 ## Tips
 
 ### set -ex
